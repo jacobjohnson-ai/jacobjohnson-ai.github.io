@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jacob Johnson | AI Automation</title>
+<meta name="description" content="Jacob Johnson builds AI automations that connect business tools, sort incoming work, and cut manual steps.">
+<style>
+:root{--bg:#0b0d10;--card:#13161b;--line:#232830;--ink:#e9edf2;--mute:#9aa4b2;--accent:#4f8cff;--ok:#2fbf71}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+nav b{font-size:17px;letter-spacing:.2px}
+nav div a{color:var(--mute);margin-left:22px;font-size:15px}
+header{padding:70px 0 60px}
+h1{font-size:clamp(32px,5vw,50px);line-height:1.12;max-width:760px;letter-spacing:-.5px}
+header p{color:var(--mute);font-size:18px;max-width:640px;margin-top:18px}
+.btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 18px;border-radius:9px;font-weight:600;font-size:15px}
+.btn.p{background:var(--accent);color:#fff}.btn.s{border:1px solid var(--line);color:var(--ink)}
+.btn:hover{text-decoration:none;opacity:.9}
+section{padding:46px 0;border-top:1px solid var(--line)}
+h2{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card img{display:block;width:100%;border-bottom:1px solid var(--line)}
+.cb{padding:26px}
+.cb h3{font-size:24px}
+.cb>p{color:var(--mute);margin-top:8px;max-width:760px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tags span{font-size:13px;border:1px solid var(--line);border-radius:20px;padding:3px 11px;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.grid div{border:1px solid var(--line);border-radius:10px;padding:14px}
+.grid b{display:block;font-size:14px;margin-bottom:4px}.grid p{color:var(--mute);font-size:14px}
+.replay{margin-top:24px;border:1px solid var(--line);border-radius:12px;padding:20px}
+.replay h4{font-size:16px;margin-bottom:4px}.replay>p{color:var(--mute);font-size:14px}
+.msg{background:#0e1115;border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin:14px 0;font-size:15px}
+.steps{display:grid;gap:10px;margin-top:14px}
+.step{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:12px 14px;opacity:.25;transition:opacity .4s}
+.step.on{opacity:1}
+.dot{flex:0 0 26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--mute)}
+.step.on .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.step b{font-size:15px}.step p{color:var(--mute);font-size:14px}
+.step img{margin-top:8px;max-width:100%;border-radius:6px;border:1px solid var(--line)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:#cfe0ff}
+.links{margin-top:18px;display:flex;gap:16px;flex-wrap:wrap;font-size:15px}
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.skills div{border:1px solid var(--line);border-radius:10px;padding:16px}
+.skills b{display:block;margin-bottom:4px}.skills p{color:var(--mute);font-size:15px}
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:15px}
+@media(max-width:760px){.grid,.skills{grid-template-columns:1fr}nav div a{margin-left:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><b>Jacob Johnson</b><div><a href="#work">Work</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav>
+
+<header>
+<h1>I build AI automations that connect your tools and take manual work off your plate.</h1>
+<p>Workflows that read incoming requests, sort them with AI, update your CRM, and alert your team, built with n8n, APIs, and a cybersecurity background that keeps them safe.</p>
+<div class="btns"><a class="btn p" href="#work">See the work</a><a class="btn s" href="https://github.com/jacobjohnson-ai">GitHub</a></div>
+</header>
+
+<section id="work">
+<h2>Work</h2>
+<div class="card">
+<img src="img/canvas.png" alt="n8n workflow: webhook, AI classify, parse AI result, HubSpot create contact, urgent check, Slack alert">
+<div class="cb">
+<h3>AI Lead Intake → CRM</h3>
+<p>When a contact form is submitted, AI reads the message, decides what it is and how urgent it is, saves the person to HubSpot, and posts an alert to Slack if it needs attention now. No one has to read, sort, or type anything.</p>
+<div class="tags"><span>n8n</span><span>Google Gemini API</span><span>HubSpot CRM API</span><span>Slack webhooks</span><span>JavaScript</span><span>Webhooks</span></div>
+<div class="grid">
+<div><b>Validated AI output</b><p>The AI's answer is checked against allowed values, so a bad response can't break the workflow.</p></div>
+<div><b>Fails safely</b><p>Retries the AI call, and a CRM error doesn't stop the team alert.</p></div>
+<div><b>Least privilege</b><p>Each API key has only the permissions it needs and is locked to its own service.</p></div>
+</div>
+
+<div class="replay">
+<h4>Replay a real run</h4>
+<p>This is one actual run of the workflow, captured from n8n, HubSpot, and Slack.</p>
+<div class="msg"><b>Dana Whitfield</b> · dana.test@example.com<br>"Our website is down and we need help today, can someone call us?"</div>
+<button class="btn p" id="play" style="border:0;cursor:pointer">▶ Run it</button>
+<div class="steps">
+<div class="step"><span class="dot">1</span><div><b>Webhook received the form</b><p>n8n catches the submission instantly.</p></div></div>
+<div class="step"><span class="dot">2</span><div><b>AI classified it</b><p><code>category: support · urgency: high · score: 8 · "Website is down and requires immediate assistance via phone call today."</code></p><img src="img/ai-result.png" alt="AI classification output table"></div></div>
+<div class="step"><span class="dot">3</span><div><b>Saved to HubSpot</b><p>Contact created through the CRM API.</p><img src="img/hubspot.png" alt="HubSpot contact list showing Dana Whitfield"></div></div>
+<div class="step"><span class="dot">4</span><div><b>Urgent, so the team was alerted</b><p>Score 8 or higher triggers a Slack message.</p><img src="img/slack.png" alt="Slack alert in the leads channel"></div></div>
+</div>
+</div>
+
+<div class="links"><a href="https://github.com/jacobjohnson-ai/ai-lead-intake-n8n">View the code and setup on GitHub →</a></div>
+</div>
+</div>
+</section>
+
+<section id="skills">
+<h2>Skills</h2>
+<div class="skills">
+<div><b>Automation</b><p>n8n workflows, webhooks, triggers, branching logic, error handling</p></div>
+<div><b>AI integration</b><p>LLM APIs (Gemini, Claude, OpenAI), prompt design, structured JSON output, output validation</p></div>
+<div><b>APIs and CRM</b><p>REST APIs, HubSpot, Slack, API keys and bearer tokens, scopes</p></div>
+<div><b>Security</b><p>A.A.S. in Cybersecurity. Least-privilege access, secret handling, prompt-injection defense</p></div>
+</div>
+</section>
+
+<footer id="contact">
+<p>Have a process that eats your team's time? I'd like to hear about it.</p>
+<div class="links"><a href="https://github.com/jacobjohnson-ai">GitHub</a></div>
+</footer>
+</div>
+<script>
+document.getElementById('play').onclick=function(){
+  var s=document.querySelectorAll('.step');
+  s.forEach(function(e){e.classList.remove('on')});
+  s.forEach(function(e,i){setTimeout(function(){e.classList.add('on')},500+i*900)});
+};
+</script>
+</body>
+</html>

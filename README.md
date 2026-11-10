@@ -1,2 +1,3 @@
 # jacobjohnson-ai.github.io
-Jacob Johnson: AI automation and integration projects
+
+Portfolio site: https://jacobjohnson-ai.github.io
