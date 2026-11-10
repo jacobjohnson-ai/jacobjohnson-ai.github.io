@@ -82,6 +82,16 @@ body.lock{overflow:hidden}
 .step.on img{max-height:600px;opacity:1}
 .dot{flex:0 0 26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--mute);transition:background .4s,border-color .4s}
 .step.on .dot{background:var(--ok);border-color:var(--ok);color:#fff;box-shadow:0 0 0 4px rgba(47,191,113,.2)}
+
+.cform{display:grid;gap:12px;max-width:640px;margin-top:18px}
+.cform .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cform input,.cform textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font:inherit;font-size:15px}
+.cform textarea{min-height:140px;resize:vertical}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:#777}
+.cform button{justify-self:start;border:0;cursor:pointer}
+.cmsg{font-size:14px;color:var(--mute);min-height:20px}
+.hp{position:absolute;left:-9999px}
+@media(max-width:760px){.cform .two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -116,7 +126,18 @@ body.lock{overflow:hidden}
 </div>
 </section>
 
-<footer id="contact">
+<section id="contact">
+<h2>Contact</h2>
+<form class="cform" id="cform" action="https://formspree.io/f/maeowerz" method="POST">
+<div class="two"><input name="name" placeholder="Name" required maxlength="100" aria-label="Name"><input type="email" name="email" placeholder="Email" required aria-label="Email"></div>
+<textarea name="message" placeholder="Message" required maxlength="2000" aria-label="Message"></textarea>
+<input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+<button class="btn p" type="submit">Send</button>
+<div class="cmsg" id="cmsg" role="status"></div>
+</form>
+</section>
+
+<footer>
 <p>Open to IT support, cybersecurity, and AI automation roles.</p>
 <div class="links"><a href="https://www.linkedin.com/in/jacob-j-8a08501a5/">LinkedIn</a><a href="https://github.com/jacobjohnson-ai">GitHub</a></div>
 </footer>
@@ -138,6 +159,13 @@ document.getElementById('mx').onclick=close;
 m.addEventListener('click',function(e){if(e.target===m)close();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('open'))close();});
 })();
+</script>
+<script>
+(function(){var f=document.getElementById('cform'),m=document.getElementById('cmsg');if(!f)return;
+f.addEventListener('submit',function(e){e.preventDefault();var btn=f.querySelector('button');btn.disabled=true;btn.textContent='Sending...';m.textContent='';
+fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}}).then(function(r){
+if(r.ok){f.reset();m.textContent='Thanks, your message was sent.';}else{m.textContent='Something went wrong. Please try again.';}
+}).catch(function(){m.textContent='Network error. Please try again.';}).finally(function(){btn.disabled=false;btn.textContent='Send';});});})();
 </script>
 </body>
 </html>
