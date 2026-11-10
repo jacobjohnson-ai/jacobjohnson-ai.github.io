@@ -83,10 +83,10 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 <div class="msg"><b>Dana Whitfield</b> · dana.test@example.com<br>"Our website is down and we need help today, can someone call us?"</div>
 <button class="btn p" id="play" style="border:0;cursor:pointer">▶ Run it</button>
 <div class="steps">
-<div class="step"><span class="dot">1</span><div><b>Webhook received the form</b><p>n8n catches the submission instantly.</p></div></div>
-<div class="step"><span class="dot">2</span><div><b>AI classified it</b><p><code>category: support · urgency: high · score: 8 · "Website is down and requires immediate assistance via phone call today."</code></p><img src="img/ai-result.png" alt="AI classification output table"></div></div>
+<div class="step"><span class="dot">1</span><div><b>Ticket received</b><p>n8n catches the submission instantly.</p></div></div>
+<div class="step"><span class="dot">2</span><div><b>AI classified it</b><p><code>category: technical_issue · urgency: high · priority_score: 9 · "Website is currently down and customer is requesting an urgent phone call for assistance today."</code></p><img src="img/ai-result.png" alt="AI classification output table"></div></div>
 <div class="step"><span class="dot">3</span><div><b>Saved to HubSpot</b><p>Contact created through the CRM API.</p><img src="img/hubspot.png" alt="HubSpot contact list showing Dana Whitfield"></div></div>
-<div class="step"><span class="dot">4</span><div><b>Urgent, so the team was alerted</b><p>Score 8 or higher triggers a Slack message.</p><img src="img/slack.png" alt="Slack alert in the leads channel"></div></div>
+<div class="step"><span class="dot">4</span><div><b>Urgent, so the team was alerted</b><p>A priority score of 8 or higher triggers a Slack message.</p><img src="img/slack.png" alt="Slack alert in the leads channel"></div></div>
 </div>
 </div>
 
