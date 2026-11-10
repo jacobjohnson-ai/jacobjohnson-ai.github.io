@@ -10,7 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
 nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
 nav b{font-size:17px;letter-spacing:.2px}
 nav div a{color:var(--mute);margin-left:22px;font-size:15px}
@@ -50,47 +50,32 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:#cfe0ff}
 .skills b{display:block;margin-bottom:4px}.skills p{color:var(--mute);font-size:15px}
 footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:15px}
 @media(max-width:760px){.grid,.skills{grid-template-columns:1fr}nav div a{margin-left:14px}}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+a.pc{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;color:var(--ink);transition:border-color .2s,transform .2s}
+a.pc:hover{text-decoration:none;border-color:var(--accent);transform:translateY(-2px)}
+a.pc img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#1b1b1b;border-bottom:1px solid var(--line)}
+.pc div{padding:16px 18px}.pc h3{font-size:18px}.pc p{color:var(--mute);font-size:14px;margin-top:4px}
+.back{display:inline-block;margin:6px 0 20px;color:var(--mute);font-size:15px}
 </style>
 </head>
 <body>
 <div class="wrap">
-<nav><span></span><div><a href="#work">Work</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav>
+<nav><span></span><div><a href="/#work">Work</a><a href="/#skills">Skills</a><a href="/#contact">Contact</a></div></nav>
 
 <header>
 <h1>Jacob Johnson</h1>
 <p style="font-size:20px;color:var(--ink);margin-top:10px">Cybersecurity Graduate · Technical Support · AI Solutions · eCommerce &amp; Business Operations</p>
-<div class="btns"><a class="btn p" href="#work">See the work</a><a class="btn s" href="https://github.com/jacobjohnson-ai">GitHub</a><a class="btn s" href="https://www.linkedin.com/in/jacob-j-8a08501a5/">LinkedIn</a></div>
+<div class="btns"><a class="btn p" href="/#work">See the work</a><a class="btn s" href="https://github.com/jacobjohnson-ai">GitHub</a><a class="btn s" href="https://www.linkedin.com/in/jacob-j-8a08501a5/">LinkedIn</a></div>
 </header>
 
 <section id="work">
 <h2>Work</h2>
-<div class="card">
-<img src="img/canvas.png" alt="n8n workflow: webhook, AI classify, parse AI result, HubSpot create contact, urgent check, Slack alert">
-<div class="cb">
-<h3>AI Support Ticket Triage</h3>
-<p>When a customer submits a support request, AI reads the ticket, decides what it is and how urgent it is, saves the person to HubSpot, and posts an alert to Slack if it needs attention now. No one has to read, sort, or type anything.</p>
-<div class="tags"><span>n8n</span><span>Google Gemini API</span><span>HubSpot CRM API</span><span>Slack webhooks</span><span>JavaScript</span><span>Webhooks</span></div>
-<div class="grid">
-<div><b>Validated AI output</b><p>The AI's answer is checked against allowed values, so a bad response can't break the workflow.</p></div>
-<div><b>Fails safely</b><p>Retries the AI call, and a CRM error doesn't stop the team alert.</p></div>
-<div><b>Least privilege</b><p>Each API key has only the permissions it needs and is locked to its own service.</p></div>
-</div>
-
-<div class="replay">
-<h4>Replay a real run</h4>
-<p>This is one actual run of the workflow, captured from n8n, HubSpot, and Slack.</p>
-<div class="msg"><b>Dana Whitfield</b> · dana.test@example.com<br>"Our website is down and we need help today, can someone call us?"</div>
-<button class="btn p" id="play" style="border:0;cursor:pointer">▶ Run it</button>
-<div class="steps">
-<div class="step"><span class="dot">1</span><div><b>Ticket received</b><p>n8n catches the submission instantly.</p></div></div>
-<div class="step"><span class="dot">2</span><div><b>AI classified it</b><p><code>category: technical_issue · urgency: high · priority_score: 9 · "Website is currently down and customer is requesting an urgent phone call for assistance today."</code></p><img src="img/ai-result.png" alt="AI classification output table"></div></div>
-<div class="step"><span class="dot">3</span><div><b>Saved to HubSpot</b><p>Contact created through the CRM API.</p><img src="img/hubspot.png" alt="HubSpot contact list showing Dana Whitfield"></div></div>
-<div class="step"><span class="dot">4</span><div><b>Urgent, so the team was alerted</b><p>A priority score of 8 or higher triggers a Slack message.</p><img src="img/slack.png" alt="Slack alert in the leads channel"></div></div>
-</div>
-</div>
-
-<div class="links"><a href="https://github.com/jacobjohnson-ai/ai-ticket-triage-n8n">View the code and setup on GitHub →</a></div>
-</div>
+<div class="cards">
+<a class="pc" href="/projects/ai-ticket-triage.html">
+<img src="/img/triage-thumb.png" alt="AI Support Ticket Triage workflow">
+<div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p></div>
+</a>
 </div>
 </section>
 
@@ -100,7 +85,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 <div><b>IT Support &amp; Networking</b><p>Troubleshooting, Windows, Linux, hardware, TCP/IP, DHCP, routing and switching, Cisco, Wireshark</p></div>
 <div><b>eCommerce</b><p>Wix site maintenance, product listings, inventory records, Excel</p></div>
 <div><b>Automation</b><p>n8n workflows, webhooks, triggers, branching logic, error handling</p></div>
-<div><b>AI integration</b><p>LLM APIs (Gemini, Claude, OpenAI), prompt design, structured JSON output, output validation</p></div>
+<div><b>AI integration</b><p>LLM APIs (Google Gemini), ChatGPT, Claude, prompt design, structured JSON output, output validation</p></div>
 <div><b>APIs and CRM</b><p>REST APIs, HubSpot, Slack, API keys and bearer tokens, scopes</p></div>
 <div><b>Cybersecurity</b><p>A.A.S. in Cybersecurity, network defense, firewalls, Wireshark</p></div>
 </div>
@@ -111,12 +96,5 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 <div class="links"><a href="https://www.linkedin.com/in/jacob-j-8a08501a5/">LinkedIn</a><a href="https://github.com/jacobjohnson-ai">GitHub</a></div>
 </footer>
 </div>
-<script>
-document.getElementById('play').onclick=function(){
-  var s=document.querySelectorAll('.step');
-  s.forEach(function(e){e.classList.remove('on')});
-  s.forEach(function(e,i){setTimeout(function(){e.classList.add('on')},500+i*900)});
-};
-</script>
 </body>
 </html>
