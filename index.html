@@ -11,8 +11,8 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 ::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent;margin:6px 0}
+::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
 ::-webkit-scrollbar-thumb:hover{background:#5a5a5a}
 ::-webkit-scrollbar-button{display:none;width:0;height:0}
 @supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:#3a3a3a transparent}}
@@ -25,14 +25,14 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
 nav b{font-size:17px;letter-spacing:.2px}
 nav div a{color:var(--mute);margin-left:22px;font-size:15px}
-header{padding:24px 0 48px}
+header{padding:24px 0 36px}
 h1{font-size:clamp(32px,5vw,50px);line-height:1.12;max-width:760px;letter-spacing:-.5px}
 header p{color:var(--mute);font-size:18px;max-width:640px;margin-top:18px}
 .btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-block;padding:11px 18px;border-radius:9px;font-weight:600;font-size:15px}
 .btn.p{background:#fff;color:#0a0a0a}.btn.s{border:1px solid var(--line);color:var(--ink)}
 .btn:hover{text-decoration:none;opacity:.9}
-section{padding:46px 0;border-top:1px solid var(--line)}
+section{padding:38px 0;border-top:1px solid var(--line)}
 h2{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .card img{display:block;width:100%;border-bottom:1px solid var(--line)}
@@ -65,7 +65,12 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
 a.pc{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;color:var(--ink);transition:border-color .2s,transform .2s}
 a.pc:hover{text-decoration:none;border-color:var(--accent);transform:translateY(-2px)}
-a.pc img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#1b1b1b;border-bottom:1px solid var(--line)}
+a.pc{display:grid;grid-template-columns:3fr 2fr;align-items:center}
+a.pc img{display:block;width:100%;height:100%;object-fit:contain;background:#171717;border-right:1px solid var(--line);padding:10px}
+.pc div{padding:28px 32px!important}.pc h3{font-size:24px!important}.pc p{font-size:16px!important;margin-top:8px!important}.pc .go{display:inline-block;margin-top:16px;color:var(--ink);font-size:14px;font-weight:600}
+@media(max-width:900px){a.pc{grid-template-columns:1fr}a.pc img{border-right:0;border-bottom:1px solid var(--line)}}
+@media(min-width:900px){.nw{white-space:nowrap}}
+.cards>a.pc{grid-column:1/-1}
 .pc div{padding:16px 18px}.pc h3{font-size:18px}.pc p{color:var(--mute);font-size:14px;margin-top:4px}
 .back{display:inline-block;margin:6px 0 20px;color:var(--mute);font-size:15px}
 
@@ -104,7 +109,7 @@ body.lock{overflow:hidden}
 
 <header>
 <h1>Jacob Johnson</h1>
-<p style="font-size:20px;color:var(--ink);margin-top:10px">Cybersecurity Graduate · Technical Support · AI Solutions · eCommerce &amp; Business Operations</p>
+<p style="font-size:20px;color:var(--ink);margin-top:10px"><span class="nw">Cybersecurity Graduate · Technical Support · AI Solutions ·</span> <span class="nw">eCommerce &amp; Business Operations</span></p>
 <div class="btns"><a class="btn p" href="/#work">See the work</a><a class="btn s" href="https://github.com/jacobjohnson-ai">GitHub</a><a class="btn s" href="https://www.linkedin.com/in/jacob-j-8a08501a5/">LinkedIn</a></div>
 </header>
 
@@ -112,8 +117,8 @@ body.lock{overflow:hidden}
 <h2>Work</h2>
 <div class="cards">
 <a class="pc" href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html">
-<img src="/img/triage-thumb.png" alt="AI Support Ticket Triage workflow">
-<div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p></div>
+<img src="/img/triage-card.png" alt="AI Support Ticket Triage workflow">
+<div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p><span class="go">View project →</span></div>
 </a>
 </div>
 </section>
