@@ -26,7 +26,7 @@ header p{color:var(--mute);margin-top:6px;max-width:720px}
 .msg .who{font-size:12.5px;color:var(--dim);letter-spacing:.3px;margin-bottom:3px}
 .msg .txt{white-space:pre-wrap;font-size:15.5px}
 .msg.you .txt{color:var(--ink)}
-.msg.agent .txt{color:#d4d4d4}
+.msg.agent .txt{color:#d4d4d4}.msg .txt b{color:var(--ink);font-weight:600}
 .steps{display:grid;gap:2px;margin-bottom:6px}
 .steps div{font-size:13px;color:var(--mute)}
 .steps div:before{content:"→ ";color:var(--dim)}
@@ -69,10 +69,11 @@ var STEP={search_kb:function(a,r){return 'Searched the knowledge base'+(r&&r.fou
  check_outages:function(a,r){return 'Checked for outages'+(r&&r.outages&&r.outages.length?': '+r.outages[0].note.split('.')[0]:': none found')},
  create_ticket:function(a,r){return r&&r.created?'Created ticket #'+r.ticket_number:'Tried to create a ticket: '+((r&&r.error)||'failed')}};
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function fmt(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(^|\s)\*(\S[^*]*?)\*(?=\s|$|[.,!?])/g,'$1$2')}
 function add(who,text,tools){var d=document.createElement('div');d.className='msg '+(who==='You'?'you':'agent');
  var h='<div class="who">'+who+'</div>';
  if(tools&&tools.length){h+='<div class="steps">'+tools.map(function(t){var f=STEP[t.name];var s=f?f(t.args,t.result):t.name;return '<div'+(t.name==='create_ticket'&&t.result&&t.result.created?' class="tk"':'')+'>'+esc(s)+'</div>'}).join('')+'</div>'}
- h+='<div class="txt">'+esc(text)+'</div>';d.innerHTML=h;log.appendChild(d);d.scrollIntoView({block:'end',behavior:'smooth'});return d}
+ h+='<div class="txt">'+fmt(text)+'</div>';d.innerHTML=h;log.appendChild(d);d.scrollIntoView({block:'end',behavior:'smooth'});return d}
 function send(text){text=text.trim();if(!text||busy)return;var t=document.getElementById('try');if(t)t.remove();
  busy=true;b.disabled=true;q.value='';add('You',text);hist.push({role:'user',text:text});
  var w=document.createElement('div');w.className='typing';w.textContent='Agent is working…';log.appendChild(w);w.scrollIntoView({block:'end'});
