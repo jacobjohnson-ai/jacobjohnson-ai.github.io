@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northwind Service Desk · Jacob Johnson</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');</script>
+<style>
+:root{--bg:#0a0a0a;--card:#141414;--card2:#1a1a1a;--line:#262626;--ink:#f2f2f2;--mute:#a3a3a3;--dim:#6b6b6b;--green:#4ade80;--amber:#fbbf24;--red:#f87171}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.5;font-size:15px}
+@media(min-width:2200px){body{zoom:1.15}}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:transparent;margin:12px 0}::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:3px solid var(--bg)}::-webkit-scrollbar-button{display:none;width:0;height:0}
+.wrap{width:92%;max-width:1300px;margin:0 auto;padding:0 0 28px;display:flex;flex-direction:column;height:100vh}
+nav.site{display:flex;justify-content:space-between;padding:18px 0 4px}nav.site a{color:var(--mute);text-decoration:none}nav.site a:hover{color:var(--ink)}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:18px 0 14px;border-bottom:1px solid var(--line)}
+h1{font-size:28px;letter-spacing:-.4px}h1 .demo{font-size:15px;font-weight:400;color:var(--dim);margin-left:6px;letter-spacing:0}
+header p{color:var(--mute);font-size:14.5px;margin-top:4px;max-width:760px}
+.who{text-align:right;font-size:14px;color:var(--mute);white-space:nowrap}.who b{color:var(--ink);font-weight:600}
+.who button{margin-left:10px}
+button,.btn{background:#fff;color:#0a0a0a;border:0;border-radius:9px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;font-size:14px}
+button.s{background:transparent;color:var(--ink);border:1px solid var(--line)}button.s:hover{border-color:#555}
+button:disabled{opacity:.45;cursor:default}
+input,select,textarea{background:#0f0f0f;border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--ink);font:inherit;font-size:14.5px;outline:none;width:100%}
+input:focus,select:focus,textarea:focus{border-color:#555}
+textarea{resize:vertical;min-height:84px}
+label{display:block;font-size:13px;color:var(--mute);margin:0 0 6px}
+.main{flex:1;min-height:0;overflow:hidden;padding-top:18px}
+.err{color:var(--red);font-size:14px;margin-top:10px}
+.lbl{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mute);font-weight:600}
+/* login */
+.login{max-width:760px;margin:18px auto 0;display:grid;gap:22px}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.role{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;cursor:pointer;text-align:left;color:var(--ink);font-weight:400}
+.role:hover{border-color:#555}.role b{display:block;font-size:16px;margin-bottom:4px}.role span{color:var(--mute);font-size:13.5px;display:block;line-height:1.45}
+.role em{font-style:normal;display:block;margin-top:12px;font-size:13px;color:var(--ink);font-weight:600}
+.or{color:var(--dim);font-size:13px;text-align:center}
+.manual{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+/* layout */
+.split{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;height:100%}
+.col{min-height:0;overflow-y:auto;padding-right:6px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}.stat b{display:block;font-size:24px;font-weight:600}.stat span{color:var(--mute);font-size:12.5px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.filters button{padding:6px 12px;font-size:13px;font-weight:500}
+.filters button.on{background:#fff;color:#0a0a0a;border-color:#fff}
+.list{display:grid;gap:8px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:start}
+.item:hover{border-color:#444}.item.sel{border-color:#fff}
+.item .id{color:var(--mute);font-size:13px;padding-top:1px}.item .t{font-size:14.5px;line-height:1.4}.item .m{color:var(--dim);font-size:12.5px;margin-top:3px}
+.st{font-size:12.5px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.st:before{content:"";width:7px;height:7px;border-radius:50%;background:#888}
+.st.open:before{background:var(--amber)}.st.in_progress:before{background:#60a5fa}.st.resolved:before{background:var(--green)}
+.urg-high{color:var(--red)}
+.empty{color:var(--dim);font-size:14px;padding:12px 2px}
+/* detail */
+.dh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.dh h2{font-size:19px;line-height:1.35}
+.meta{display:grid;grid-template-columns:110px 1fr;gap:5px 10px;font-size:14px;margin:14px 0}
+.meta span{color:var(--dim)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 16px}
+.acts button{padding:7px 12px;font-size:13px}
+.thread{display:grid;gap:12px;margin:8px 0 14px}
+.note{border-left:2px solid var(--line);padding:2px 0 2px 12px}
+.note.internal{border-left-color:var(--amber)}
+.note .h{font-size:12.5px;color:var(--dim)}.note .h b{color:var(--mute);font-weight:600}.note .tag{color:var(--amber);margin-left:6px}
+.note .b{font-size:14.5px;white-space:pre-wrap;margin-top:2px}
+.reply{display:grid;gap:8px}
+.reply .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.chk{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--mute);cursor:pointer}.chk input{width:auto}
+.audit{display:grid;gap:6px;margin-top:6px}
+.audit div{font-size:13px;color:var(--mute);display:grid;grid-template-columns:120px 1fr;gap:8px}.audit div span:first-child{color:var(--dim)}
+.form{display:grid;gap:12px}.form .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ok{color:var(--green);font-size:14px}
+.sect{margin:18px 0 8px}
+.techs{display:grid;gap:6px;font-size:14px}.techs div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:-4px 0 16px}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--mute);padding:6px 0 10px;font-weight:500}
+.tabs button.on{color:var(--ink);border-bottom-color:#fff}
+.due{font-size:12.5px;color:var(--mute)}.due.late{color:var(--red)}
+.chat{display:flex;flex-direction:column;height:100%;min-height:420px}
+.msgs{flex:1;overflow-y:auto;display:grid;align-content:start;gap:12px;padding:4px 4px 12px}
+.msg{max-width:85%;font-size:14.5px;white-space:pre-wrap;line-height:1.5}
+.msg.u{justify-self:end;text-align:right}.msg .who2{font-size:12px;color:var(--dim);margin-bottom:2px}
+.msg.step{font-size:13px;color:var(--dim)}
+.chatin{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.sugg{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-top:4px}
+.sugg button{background:none;border:0;color:var(--mute);padding:2px 0;font-weight:400;text-align:left}.sugg button:hover{color:var(--ink)}
+.kbrow{display:flex;justify-content:space-between;gap:10px}
+.kbrow .m{white-space:nowrap}
+.note-foot{color:var(--dim);font-size:12.5px;margin-top:10px}
+.embed body{background:var(--card)}.embed nav.site{display:none}.embed .wrap{width:100%;max-width:none;padding:0 28px 18px}.embed header{padding-top:20px}
+.embed .box,.embed .item,.embed .stat,.embed .role{background:var(--card2)}
+[hidden]{display:none!important}
+@media(max-width:900px){.split{grid-template-columns:1fr;height:auto}.main{overflow:auto}.roles{grid-template-columns:1fr}.manual{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.wrap{height:auto;min-height:100vh}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="site"><a href="/">← Jacob Johnson</a><a href="/#projects">Projects</a></nav>
+<header>
+<div><h1>Northwind Service Desk <span class="demo">demo</span></h1>
+<p>A ticketing system with logins and three roles. Employees chat with the helpdesk agent or submit tickets, technicians work the queue against response targets, and admins edit the knowledge base the agent uses. Permissions are enforced inside the database, and every change is logged.</p></div>
+<div class="who" id="who" hidden></div>
+</header>
+<div class="main" id="main"></div>
+</div>
+
+<script>
+var SB='https://pwcpznbqkdlprkkydpnk.supabase.co';
+var KEY='sb_publishable_-QgwfTu1udPpjH6ndtqGEA_FUUsMz7G';
+var DEMO_PW='NorthwindDemo-2026';
+var DEMOS=[
+ {email:'employee@northwind.example',name:'Employee',who:'Riley Carter · Sales',what:'Chat with the helpdesk agent, submit tickets, and see only your own.'},
+ {email:'tech@northwind.example',name:'Technician',who:'Morgan Diaz · IT',what:'Work the queue against response targets: assign, reply, add internal notes, resolve.'},
+ {email:'admin@northwind.example',name:'Admin',who:'Avery Brooks · IT',what:'Everything a technician can do, plus team stats and editing the knowledge base.'}];
+var AGENT='https://it-helpdesk-agent.jacobjohnson-ai.workers.dev';
+var S={token:null,user:null,me:null,people:{},tickets:[],sel:null,filter:'active',view:'queue',chat:[],kb:[],kbSel:null};
+var TARGET={high:4,medium:24,low:72};
+function due(t){if(t.status==='resolved')return '';if(t.first_response_at)return '<span class="due">Replied</span>';var left=TARGET[t.urgency]-(Date.now()-new Date(t.created_at))/36e5;
+ if(left<0)return '<span class="due late">Reply overdue</span>';return '<span class="due">Reply due in '+(left<1?Math.max(1,Math.round(left*60))+'m':Math.round(left)+'h')+'</span>'}
+var main=document.getElementById('main'),whoEl=document.getElementById('who');
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function when(d){if(!d)return '';var t=new Date(d);return t.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+t.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})}
+var STL={open:'Open',in_progress:'In progress',resolved:'Resolved'};
+function st(s){return '<span class="st '+s+'">'+STL[s]+'</span>'}
+function staff(){return S.me&&(S.me.role==='technician'||S.me.role==='admin')}
+
+// ---- API (Supabase Auth + REST; the database decides what each role may see or change) ----
+function api(path,opt){opt=opt||{};var h={apikey:KEY,'Content-Type':'application/json'};if(S.token)h.Authorization='Bearer '+S.token;if(opt.prefer)h.Prefer=opt.prefer;
+ return fetch(SB+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined}).then(function(r){
+  return r.text().then(function(t){var j=t?JSON.parse(t):null;if(!r.ok)throw new Error((j&&(j.message||j.msg||j.error_description))||('Error '+r.status));return j})})}
+function login(email,pw){return api('/auth/v1/token?grant_type=password',{method:'POST',body:{email:email,password:pw}}).then(function(j){
+ S.token=j.access_token;S.user=j.user;try{sessionStorage.setItem('nw',JSON.stringify({t:j.access_token,u:j.user,exp:Date.now()+j.expires_in*1000-60000}))}catch(e){}return start()})}
+function logout(){S.chat=[];S.view='queue';if(S.token)api('/auth/v1/logout',{method:'POST'}).catch(function(){});S.token=null;S.user=null;S.me=null;S.sel=null;try{sessionStorage.removeItem('nw')}catch(e){}whoEl.hidden=true;showLogin()}
+
+function start(){return Promise.all([api('/rest/v1/profiles?select=id,full_name,department,role'),loadTickets()]).then(function(r){
+ S.people={};r[0].forEach(function(p){S.people[p.id]=p});S.me=S.people[S.user.id];
+ if(!S.me)throw new Error('This login has no profile yet. Run the demo users SQL.');
+ whoEl.hidden=false;whoEl.innerHTML='<b>'+esc(S.me.full_name)+'</b> · '+esc(S.me.role==='in_progress'?'':S.me.role[0].toUpperCase()+S.me.role.slice(1))+'<button class="s" id="lo">Log out</button>';
+ document.getElementById('lo').onclick=logout;render()})}
+function loadTickets(){return api('/rest/v1/tickets?select=id,created_at,updated_at,summary,message,category,urgency,priority_score,status,assigned_to,requester_id,name,department,first_response_at&order=id.desc&limit=200').then(function(t){S.tickets=t})}
+
+// ---- Login ----
+function showLogin(err){main.innerHTML='<div class="login"><div><div class="lbl" style="margin-bottom:12px">Try it as</div><div class="roles">'+
+ DEMOS.map(function(d,i){return '<button class="role" data-i="'+i+'"><b>'+d.name+'</b><span>'+d.who+'</span><span style="margin-top:8px">'+d.what+'</span><em>Log in →</em></button>'}).join('')+
+ '</div></div><div class="or">or sign in</div><form class="manual" id="lf"><div><label>Email</label><input id="em" type="email" autocomplete="username"></div><div><label>Password</label><input id="pw" type="password" autocomplete="current-password"></div><button>Sign in</button></form>'+
+ '<div class="err" id="le">'+esc(err||'')+'</div><p class="note-foot">Demo accounts for a fictional company. Sign-ups are turned off, and each role can only do what the database allows.</p></div>';
+ main.querySelectorAll('.role').forEach(function(b){b.onclick=function(){var d=DEMOS[b.dataset.i];b.disabled=true;login(d.email,DEMO_PW).catch(function(e){showLogin(e.message)})}});
+ document.getElementById('lf').onsubmit=function(e){e.preventDefault();login(document.getElementById('em').value.trim(),document.getElementById('pw').value).catch(function(e){showLogin(e.message)})}}
+
+// ---- Main views ----
+function render(){var me=S.me;
+ if(staff()&&S.view==='kb')return kbView();
+ var left=staff()?queueHtml():myHtml();
+ main.innerHTML='<div class="split"><div class="col" id="lc">'+(staff()?tabsHtml():'')+left+'</div><div class="col" id="rc"></div></div>';
+ bindLeft();bindTabs();if(S.sel)openTicket(S.sel);else if(!staff())agentChat();else document.getElementById('rc').innerHTML='<div class="empty">Pick a ticket from the queue.</div>';
+ if(me.role==='admin')loadStats()}
+function tabsHtml(){return '<div class="tabs">'+[['queue','Queue'],['kb','Knowledge base']].map(function(x){return '<button data-v="'+x[0]+'" class="'+(S.view===x[0]?'on':'')+'">'+x[1]+'</button>'}).join('')+'</div>'}
+function bindTabs(){main.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){S.view=b.dataset.v;render()}})}
+function rowHtml(t){var p=S.people[t.assigned_to];
+ return '<div class="item'+(S.sel===t.id?' sel':'')+'" data-id="'+t.id+'"><div class="id">#'+t.id+'</div><div><div class="t">'+esc(t.summary||t.message)+'</div><div class="m">'+
+ (staff()?esc(t.name||'')+(t.department?' · '+esc(t.department):'')+' · ':'')+'<span class="'+(t.urgency==='high'?'urg-high':'')+'">'+t.urgency+'</span> · '+(p?'Assigned to '+esc(p.full_name):'Unassigned')+' · '+when(t.created_at)+(staff()&&due(t)?' · '+due(t):'')+'</div></div>'+st(t.status)+'</div>'}
+function myHtml(){var mine=S.tickets.filter(function(t){return t.requester_id===S.user.id});
+ return '<div class="dh" style="margin-bottom:12px"><div class="lbl">My tickets</div><div><button class="s" id="ag">Ask the agent</button> <button class="s" id="nt">New ticket form</button></div></div><div class="list">'+(mine.length?mine.map(rowHtml).join(''):'<div class="empty">No tickets yet.</div>')+'</div>'}
+function queueHtml(){var f=S.filter,list=S.tickets.filter(function(t){
+  if(f==='active')return t.status!=='resolved';if(f==='mine')return t.assigned_to===S.user.id&&t.status!=='resolved';if(f==='unassigned')return !t.assigned_to&&t.status!=='resolved';if(f==='high')return t.urgency==='high'&&t.status!=='resolved';return t.status===f});
+ var tabs=[['active','Active'],['unassigned','Unassigned'],['mine','Assigned to me'],['high','High urgency'],['resolved','Resolved']];
+ return (S.me.role==='admin'?'<div class="stats" id="stats"></div>':'')+'<div class="dh" style="margin-bottom:10px"><div class="lbl">Queue · '+list.length+'</div></div><div class="filters">'+tabs.map(function(x){return '<button class="s'+(f===x[0]?' on':'')+'" data-f="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div><div class="list">'+(list.length?list.slice(0,80).map(rowHtml).join(''):'<div class="empty">Nothing here.</div>')+'</div>'}
+function bindLeft(){var lc=document.getElementById('lc');
+ lc.querySelectorAll('.item').forEach(function(el){el.onclick=function(){S.sel=+el.dataset.id;lc.querySelectorAll('.item').forEach(function(x){x.classList.toggle('sel',x===el)});openTicket(S.sel)}});
+ lc.querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){S.filter=b.dataset.f;render()}});
+ var ag=document.getElementById('ag');if(ag)ag.onclick=function(){S.sel=null;lc.querySelectorAll('.item').forEach(function(x){x.classList.remove('sel')});agentChat()};
+ var nt=document.getElementById('nt');if(nt)nt.onclick=function(){S.sel=null;lc.querySelectorAll('.item').forEach(function(x){x.classList.remove('sel')});newForm()}}
+function refresh(){return loadTickets().then(render)}
+
+// ---- New ticket (employee) ----
+function newForm(){var rc=document.getElementById('rc');
+ rc.innerHTML='<div class="box"><div class="lbl" style="margin-bottom:14px">New ticket</div><form class="form" id="nf">'+
+ '<div><label>What\'s the problem?</label><input id="ns" maxlength="140" placeholder="Example: Outlook keeps asking for my password" required></div>'+
+ '<div><label>Details</label><textarea id="nm" maxlength="1500" placeholder="What happens, when it started, and what you\'ve tried" required></textarea></div>'+
+ '<div class="two"><div><label>Category</label><select id="nc"><option value="technical_issue">Technical issue</option><option value="billing">Billing</option><option value="general">General</option></select></div>'+
+ '<div><label>Urgency</label><select id="nu"><option value="low">Low: it can wait</option><option value="medium" selected>Medium: slowing me down</option><option value="high">High: I can\'t work</option></select></div></div>'+
+ '<div><button>Submit ticket</button></div><div class="err" id="ne"></div></form></div>';
+ document.getElementById('nf').onsubmit=function(e){e.preventDefault();var b=e.target.querySelector('button');b.disabled=true;
+  var u=document.getElementById('nu').value,me=S.me,parts=me.full_name.toLowerCase().split(/\s+/);
+  api('/rest/v1/tickets',{method:'POST',prefer:'return=representation',body:{requester_id:S.user.id,name:me.full_name,email:parts[0]+'.'+parts[parts.length-1]+'@northwind.example',department:me.department,
+   summary:document.getElementById('ns').value.trim(),message:document.getElementById('nm').value.trim(),category:document.getElementById('nc').value,urgency:u,priority_score:{low:3,medium:5,high:8}[u]}})
+  .then(function(r){S.sel=r[0].id;return refresh()}).catch(function(err){b.disabled=false;document.getElementById('ne').textContent=err.message})}}
+
+// ---- Ticket detail ----
+function openTicket(id){var rc=document.getElementById('rc'),t=S.tickets.find(function(x){return x.id===id});if(!t){rc.innerHTML='';return}
+ rc.innerHTML='<div class="box"><div class="empty">Loading…</div></div>';
+ var reqs=[api('/rest/v1/ticket_notes?ticket_id=eq.'+id+'&select=id,author_id,body,internal,created_at&order=id')];
+ if(staff())reqs.push(api('/rest/v1/audit_log?ticket_id=eq.'+id+'&select=action,detail,actor_id,created_at&order=id'));
+ Promise.all(reqs).then(function(r){var notes=r[0],audit=r[1]||[],as=S.people[t.assigned_to];
+  var h='<div class="box"><div class="dh"><h2>#'+t.id+' · '+esc(t.summary||'Ticket')+'</h2>'+st(t.status)+'</div>'+
+  '<div class="meta"><span>Requester</span><div>'+esc(t.name||'')+(t.department?' · '+esc(t.department):'')+'</div><span>Urgency</span><div class="'+(t.urgency==='high'?'urg-high':'')+'">'+t.urgency+' · priority '+t.priority_score+'/10</div><span>Assigned to</span><div>'+(as?esc(as.full_name):'Nobody yet')+'</div><span>Opened</span><div>'+when(t.created_at)+'</div><span>First reply</span><div>'+(t.first_response_at?when(t.first_response_at):(t.status==='resolved'?'None':due(t)+' <span class="due">(target '+TARGET[t.urgency]+'h)</span>'))+'</div>'+(t.message&&t.message!==t.summary?'<span>Details</span><div style="white-space:pre-wrap">'+esc(t.message)+'</div>':'')+'</div>';
+  if(staff()){h+='<div class="acts">'+(t.assigned_to!==S.user.id?'<button class="s" data-a="assign">Assign to me</button>':'')+
+   (t.status!=='in_progress'&&t.status!=='resolved'?'<button class="s" data-a="in_progress">Start work</button>':'')+
+   (t.status!=='resolved'?'<button data-a="resolved">Mark resolved</button>':'<button class="s" data-a="open">Reopen</button>')+'</div>'}
+  h+='<div class="lbl">Conversation</div><div class="thread">'+(notes.length?notes.map(function(n){var a=S.people[n.author_id];
+   return '<div class="note'+(n.internal?' internal':'')+'"><div class="h"><b>'+esc(a?a.full_name:'Someone')+'</b> · '+when(n.created_at)+(n.internal?'<span class="tag">Internal note</span>':'')+'</div><div class="b">'+esc(n.body)+'</div></div>'}).join(''):'<div class="empty">No replies yet.</div>')+'</div>';
+  h+='<form class="reply" id="rf"><textarea id="rb" maxlength="2000" placeholder="'+(staff()?'Reply to the employee, or add an internal note':'Add a reply for the technician')+'"></textarea><div class="row">'+
+   (staff()?'<label class="chk"><input type="checkbox" id="ri"> Internal note (staff only)</label>':'<span></span>')+'<button>Send</button></div><div class="err" id="re"></div></form>';
+  if(staff())h+='<div class="sect lbl">Audit log</div><div class="audit">'+(audit.length?audit.map(function(a){var p=S.people[a.actor_id];
+   return '<div><span>'+when(a.created_at)+'</span><span>'+esc(p?p.full_name:'System')+' · '+esc(a.action)+(a.detail?': '+esc(a.detail):'')+'</span></div>'}).join(''):'<div><span></span><span>No changes recorded yet.</span></div>')+'</div>';
+  rc.innerHTML=h+'</div>';
+  rc.querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){b.disabled=true;var a=b.dataset.a,body=a==='assign'?{assigned_to:S.user.id}:{status:a};
+   if(a==='in_progress'&&!t.assigned_to)body.assigned_to=S.user.id;
+   api('/rest/v1/tickets?id=eq.'+id,{method:'PATCH',body:body,prefer:'return=minimal'}).then(refresh).catch(function(e){b.disabled=false;alertErr(e)})}});
+  document.getElementById('rf').onsubmit=function(e){e.preventDefault();var txt=document.getElementById('rb').value.trim();if(!txt)return;var b=e.target.querySelector('button');b.disabled=true;
+   var internal=staff()&&document.getElementById('ri').checked;
+   api('/rest/v1/ticket_notes',{method:'POST',body:{ticket_id:id,author_id:S.user.id,body:txt,internal:internal},prefer:'return=minimal'}).then(function(){openTicket(id)}).catch(function(err){b.disabled=false;document.getElementById('re').textContent=err.message})}
+ }).catch(alertErr)}
+function alertErr(e){var rc=document.getElementById('rc');var d=document.createElement('div');d.className='err';d.textContent=e.message;rc.prepend(d)}
+
+// ---- Agent chat (employee) ----
+// The agent gets the login token, checks it with Supabase, and opens tickets under this account.
+function agentChat(){var rc=document.getElementById('rc');
+ rc.innerHTML='<div class="box chat"><div class="lbl" style="margin-bottom:10px">IT Helpdesk Agent</div><div class="msgs" id="msgs"></div><form class="chatin" id="cf"><input id="ci" maxlength="1000" placeholder="Describe your problem…" autocomplete="off"><button>Send</button></form></div>';
+ drawChat();var ci=document.getElementById('ci');ci.focus();
+ document.getElementById('cf').onsubmit=function(e){e.preventDefault();var t=ci.value.trim();if(!t||S.busy)return;ci.value='';sendChat(t)}}
+function drawChat(){var m=document.getElementById('msgs');if(!m)return;
+ var h=S.chat.length?'':'<div class="msg"><div class="who2">Agent</div>Hi '+esc(S.me.full_name.split(' ')[0])+', what can I help with? I can walk you through common fixes, check for outages, look up your tickets, or open a ticket for a technician.</div><div class="sugg">'+
+  ["Outlook keeps asking for my password","My laptop won't charge","I think I clicked a phishing link","What's the status of my latest ticket?"].map(function(x){return '<button type="button">'+esc(x)+'</button>'}).join('')+'</div>';
+ h+=S.chat.map(function(c){if(c.role==='step')return '<div class="msg step">'+esc(c.text)+'</div>';
+  return '<div class="msg'+(c.role==='user'?' u':'')+'"><div class="who2">'+(c.role==='user'?'You':'Agent')+'</div>'+esc(c.text)+'</div>'}).join('');
+ if(S.busy)h+='<div class="msg step">Agent is working…</div>';
+ m.innerHTML=h;m.scrollTop=m.scrollHeight;
+ m.querySelectorAll('.sugg button').forEach(function(b){b.onclick=function(){sendChat(b.textContent)}})}
+var STEP={search_kb:'Searched the knowledge base',check_outages:'Checked the status page',check_ticket:'Looked up a ticket'};
+function sendChat(text){S.chat.push({role:'user',text:text});S.busy=true;drawChat();
+ var hist=S.chat.filter(function(c){return c.role!=='step'}).slice(-14).map(function(c){return {role:c.role,text:c.text}});
+ fetch(AGENT,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+S.token},body:JSON.stringify({messages:hist})})
+ .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'The agent is unavailable right now.');return j})})
+ .then(function(j){(j.tools||[]).forEach(function(t){if(STEP[t.name])S.chat.push({role:'step',text:STEP[t.name]})});
+  if(j.ticket)S.chat.push({role:'step',text:'Opened ticket #'+j.ticket.id+' under your account'});
+  S.chat.push({role:'model',text:j.reply});S.busy=false;if(j.ticket)loadTickets().then(function(){var lc=document.getElementById('lc');if(lc){lc.innerHTML=myHtml();bindLeft()}});drawChat()})
+ .catch(function(e){S.busy=false;S.chat.push({role:'step',text:e.message});drawChat()})}
+
+// ---- Knowledge base (staff read; admins add, edit, delete; the agent reads the same table) ----
+function kbView(){var admin=S.me.role==='admin';
+ main.innerHTML='<div class="split"><div class="col" id="lc">'+tabsHtml()+'<div class="dh" style="margin-bottom:10px"><div class="lbl">Articles · <span id="kbn">…</span></div>'+(admin?'<button id="kbnew">New article</button>':'')+'</div><div class="list" id="kbl"></div></div><div class="col" id="rc"><div class="empty">'+(admin?'Pick an article to edit. Changes reach the helpdesk agent within a minute.':'Pick an article to read. Only admins can edit.')+'</div></div></div>';
+ bindTabs();if(admin)document.getElementById('kbnew').onclick=function(){S.kbSel=null;kbForm(null)};
+ api('/rest/v1/kb_articles?select=id,title,keywords,steps,updated_at,updated_by&order=title').then(function(r){S.kb=r;drawKb();if(S.kbSel){var a=r.find(function(x){return x.id===S.kbSel});if(a)kbForm(a)}}).catch(function(e){document.getElementById('kbl').innerHTML='<div class="err">'+esc(e.message)+'</div>'})}
+function drawKb(){document.getElementById('kbn').textContent=S.kb.length;
+ var l=document.getElementById('kbl');l.innerHTML=S.kb.map(function(a){var p=S.people[a.updated_by];
+  return '<div class="item'+(S.kbSel===a.id?' sel':'')+'" data-k="'+esc(a.id)+'" style="grid-template-columns:1fr"><div class="kbrow"><div class="t">'+esc(a.title)+'</div><div class="m">'+a.steps.length+' steps</div></div><div class="m">'+esc(a.id)+(p?' · edited by '+esc(p.full_name)+' '+when(a.updated_at):'')+'</div></div>'}).join('');
+ l.querySelectorAll('[data-k]').forEach(function(el){el.onclick=function(){S.kbSel=el.dataset.k;l.querySelectorAll('.item').forEach(function(x){x.classList.toggle('sel',x===el)});kbForm(S.kb.find(function(a){return a.id===S.kbSel}))}})}
+function kbForm(a){var rc=document.getElementById('rc'),admin=S.me.role==='admin',ro=admin?'':' readonly';
+ rc.innerHTML='<div class="box"><div class="lbl" style="margin-bottom:14px">'+(a?(admin?'Edit article':'Article'):'New article')+'</div><form class="form" id="kf">'+
+ '<div class="two"><div><label>Title</label><input id="kt" maxlength="120" required value="'+esc(a?a.title:'')+'"'+ro+'></div><div><label>ID (lowercase, used by the agent)</label><input id="ki" pattern="[a-z0-9-]{2,40}" required value="'+esc(a?a.id:'')+'"'+(a||!admin?' readonly':'')+'></div></div>'+
+ '<div><label>Keywords (comma separated)</label><input id="kk" value="'+esc(a?a.keywords.join(', '):'')+'"'+ro+'></div>'+
+ '<div><label>Steps (one per line, up to 10)</label><textarea id="ks" style="min-height:220px" required'+ro+'>'+esc(a?a.steps.join('\n'):'')+'</textarea></div>'+
+ (admin?'<div class="row" style="display:flex;justify-content:space-between"><button>Save</button>'+(a?'<button type="button" class="s" id="kd">Delete</button>':'')+'</div>':'')+'<div class="err" id="ke"></div></form></div>';
+ if(!admin)return;
+ document.getElementById('kf').onsubmit=function(e){e.preventDefault();var b=e.target.querySelector('button');b.disabled=true;
+  var row={title:document.getElementById('kt').value.trim(),keywords:document.getElementById('kk').value.split(',').map(function(x){return x.trim().toLowerCase()}).filter(Boolean),
+   steps:document.getElementById('ks').value.split('\n').map(function(x){return x.trim()}).filter(Boolean)};
+  if(row.steps.length>10){b.disabled=false;document.getElementById('ke').textContent='Keep it to 10 steps or fewer.';return}
+  var id=document.getElementById('ki').value.trim();
+  (a?api('/rest/v1/kb_articles?id=eq.'+encodeURIComponent(a.id),{method:'PATCH',body:row,prefer:'return=minimal'})
+    :api('/rest/v1/kb_articles',{method:'POST',body:Object.assign({id:id},row),prefer:'return=minimal'}))
+  .then(function(){S.kbSel=a?a.id:id;kbView()}).catch(function(err){b.disabled=false;document.getElementById('ke').textContent=err.message})};
+ var kd=document.getElementById('kd');if(kd)kd.onclick=function(){if(kd.dataset.c!=='1'){kd.dataset.c='1';kd.textContent='Click again to delete';return}
+  api('/rest/v1/kb_articles?id=eq.'+encodeURIComponent(a.id),{method:'DELETE',prefer:'return=minimal'}).then(function(){S.kbSel=null;kbView()}).catch(function(err){document.getElementById('ke').textContent=err.message})}}
+
+// ---- Admin stats ----
+function loadStats(){api('/rest/v1/desk_stats?select=*').then(function(r){var s=r[0]||{},el=document.getElementById('stats');if(!el)return;
+ el.innerHTML=[['Open',s.open_tickets],['In progress',s.in_progress],['Overdue',s.overdue],['First reply (avg)',s.avg_hours_to_first_reply==null?'–':s.avg_hours_to_first_reply+'h'],['Resolve (avg)',s.avg_hours_to_resolve==null?'–':s.avg_hours_to_resolve+'h']].map(function(x){return '<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join('')}).catch(function(){})}
+
+// ---- Boot ----
+(function(){var s=null;try{s=JSON.parse(sessionStorage.getItem('nw')||'null')}catch(e){}
+ if(s&&s.exp>Date.now()){S.token=s.t;S.user=s.u;start().catch(function(){logout()})}else showLogin()})();
+</script>
+</body>
+</html>
