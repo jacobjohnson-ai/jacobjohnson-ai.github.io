@@ -105,6 +105,8 @@ body.lock{overflow:hidden}
 @media(max-width:760px){.cform .two{grid-template-columns:1fr}}
 .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:22px 0 28px;margin-top:40px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
 .foot a{color:var(--mute);margin-left:16px}.foot a:hover{color:var(--ink)}
+.edu{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.edu>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px}.edu b{font-size:18px}.edu p{color:var(--mute);font-size:14px;margin-top:4px}.ed{display:flex;gap:16px;align-items:center}.ed img{width:76px;height:76px;object-fit:contain;background:#fff;border-radius:10px;padding:8px;flex:none}
+@media(max-width:1000px){.edu{grid-template-columns:1fr 1fr}}@media(max-width:640px){.edu{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -136,6 +138,11 @@ body.lock{overflow:hidden}
 <div><b>APIs and CRM</b><p>REST APIs, HubSpot, Slack, API keys and bearer tokens, scopes</p></div>
 <div><b>Cybersecurity</b><p>A.A.S. in Cybersecurity, network defense, firewalls, Wireshark</p></div>
 </div>
+</section>
+
+<section id="education">
+<h2>Education</h2>
+<div class="edu"><div class="ed"><img src="/img/nova.png" alt="NOVA"><span><b>A.A.S. in Cybersecurity</b><p>Northern Virginia Community College (NOVA)</p><p>July 2025</p></span></div><div class="ed"><img src="/img/acl.png" alt="Academies of Loudoun"><span><b>CISCO</b><p>Academies of Loudoun, Monroe Advanced Technical Academy (MATA)</p></span></div></div>
 </section>
 
 <section id="contact">
