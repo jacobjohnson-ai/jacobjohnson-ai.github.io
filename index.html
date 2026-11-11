@@ -109,6 +109,8 @@ body.lock{overflow:hidden}
 .edu{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.edu>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px}.edu b{font-size:18px}.edu p{color:var(--mute);font-size:14px;margin-top:4px}.ed{display:flex;gap:16px;align-items:center}.ed img{width:76px;height:76px;object-fit:contain;background:#fff;border-radius:10px;padding:8px;flex:none}
 @media(max-width:1000px){.edu{grid-template-columns:1fr 1fr}}@media(max-width:640px){.edu{grid-template-columns:1fr}}
 .skills>div{background:var(--card)!important}.skills{grid-template-columns:repeat(3,1fr)!important;gap:18px!important}@media(max-width:1000px){.skills{grid-template-columns:1fr 1fr!important}}@media(max-width:640px){.skills{grid-template-columns:1fr!important}}
+.pc .tags{margin-top:12px;padding:0!important;font-size:13px;color:var(--ink);letter-spacing:.2px}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}.rv.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -125,10 +127,10 @@ body.lock{overflow:hidden}
 <h2>Projects</h2>
 <div class="cards">
 <a class="pc" href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html">
-<div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p><span class="go">View project →</span></div>
+<div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p><div class="tags">n8n · Google Gemini · HubSpot · Slack</div><span class="go">View project →</span></div>
 </a>
 <a class="pc" href="/dashboard.html" data-frame="/dashboard.html?embed=1">
-<div><h3>Support Ticket Dashboard</h3><p>Every ticket is saved to a SQL database and shown on a live dashboard of trends and urgent issues.</p><span class="go">View project →</span></div>
+<div><h3>Support Ticket Dashboard</h3><p>Every ticket is saved to a SQL database and shown on a live dashboard of trends and urgent issues.</p><div class="tags">Supabase · SQL · n8n · JavaScript</div><span class="go">View project →</span></div>
 </a>
 </div>
 </section>
@@ -190,6 +192,15 @@ f.addEventListener('submit',function(e){e.preventDefault();var btn=f.querySelect
 fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}}).then(function(r){
 if(r.ok){f.reset();m.textContent='Thanks, your message was sent.';}else{m.textContent='Something went wrong. Please try again.';}
 }).catch(function(){m.textContent='Network error. Please try again.';}).finally(function(){btn.disabled=false;btn.textContent='Send';});});})();
+</script>
+<script>
+(function(){var sel=['header h1','header .sub, header p','header .btns','section h2','.cards>a','.skills>div','.edu>div','form','.foot'];
+var els=[];sel.forEach(function(q){document.querySelectorAll(q).forEach(function(e){if(els.indexOf(e)<0)els.push(e)})});
+els.forEach(function(e){e.classList.add('rv')});
+var head=document.querySelectorAll('header .rv');head.forEach(function(e,i){e.style.transitionDelay=(i*120)+'ms'});
+var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
+els.forEach(function(e){var p=e.parentElement,sib=p?Array.prototype.indexOf.call(p.children,e):0;if(!e.style.transitionDelay)e.style.transitionDelay=Math.min(sib,5)*80+'ms';io.observe(e)});
+})();
 </script>
 </body>
 </html>
