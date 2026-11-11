@@ -140,7 +140,7 @@ body.lock{overflow:hidden}
 <a class="pc" href="/dashboard.html" data-frame="/dashboard.html?embed=1" data-repo="support-ticket-dashboard" data-fallback="HTML,SQL">
 <div><h3>Support Ticket Dashboard</h3><p>Every ticket is saved to a SQL database and shown on a live dashboard of trends and urgent issues.</p><div class="tags">Supabase · SQL · n8n · JavaScript</div><div class="langs"></div><span class="go">View project →</span></div>
 </a>
-<a class="pc" href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-repo="it-helpdesk-agent" data-fallback="JavaScript">
+<a class="pc" href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-repo="it-helpdesk-agent" data-fallback="JavaScript,HTML">
 <div><h3>IT Helpdesk Agent</h3><p>An AI agent that troubleshoots IT problems using three tools, and opens a ticket when it can't fix the issue.</p><div class="tags">Google Gemini · Cloudflare Workers · Supabase · JavaScript</div><div class="langs"></div><span class="go">View project →</span></div>
 </a>
 </div>
@@ -230,9 +230,14 @@ els.forEach(function(e){var p=e.parentElement,sib=p?Array.prototype.indexOf.call
 (function(){var C={HTML:'#e34c26',SQL:'#e38c00',JavaScript:'#f1e05a',CSS:'#663399',Python:'#3572A5',TypeScript:'#3178c6',JSON:'#cbcb41'};
 function draw(box,list){box.innerHTML=list.map(function(l){return '<span><i style="background:'+(C[l]||'#8b8b8b')+'"></i>'+l+'</span>'}).join('')}
 document.querySelectorAll('a.pc[data-repo]').forEach(function(a){var box=a.querySelector('.langs');if(!box)return;
- var fb=a.getAttribute('data-fallback').split(',');draw(box,fb);
- fetch('https://api.github.com/repos/jacobjohnson-ai/'+a.getAttribute('data-repo')+'/languages').then(function(r){return r.ok?r.json():null}).then(function(j){
-  if(!j)return;var k=Object.keys(j).sort(function(x,y){return j[y]-j[x]});if(k.length)draw(box,k.slice(0,3))}).catch(function(){})});
+ var repo=a.getAttribute('data-repo'),key='langs:'+repo,fb=a.getAttribute('data-fallback').split(','),saved=null;
+ try{saved=JSON.parse(localStorage.getItem(key)||'null')}catch(e){}
+ draw(box,saved&&saved.l?saved.l:fb);
+ if(saved&&Date.now()-saved.t<6*3600e3)return; // checked GitHub in the last 6 hours
+ fetch('https://api.github.com/repos/jacobjohnson-ai/'+repo+'/languages').then(function(r){return r.ok?r.json():null}).then(function(j){
+  if(!j)return;var k=Object.keys(j).sort(function(x,y){return j[y]-j[x]}).slice(0,3);if(!k.length)return;
+  if(k.join()!==(saved&&saved.l?saved.l:fb).join())draw(box,k);
+  try{localStorage.setItem(key,JSON.stringify({l:k,t:Date.now()}))}catch(e){}}).catch(function(){})});
 })();
 </script>
 </body>
