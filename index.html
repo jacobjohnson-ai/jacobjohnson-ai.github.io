@@ -215,7 +215,7 @@ if(r.ok){f.reset();m.textContent='Thanks, your message was sent.';}else{m.textCo
 }).catch(function(){m.textContent='Network error. Please try again.';}).finally(function(){btn.disabled=false;btn.textContent='Send';});});})();
 </script>
 <script>
-(function(){var sel=['header .avail','header h1','header .sub, header p','header .btns','section h2','.cards>a','.exp','.skills>div','.edu>div','form','.foot'];
+(function(){var sel=['header .avail','header h1','header .sub, header p','header .btns'];
 var els=[];sel.forEach(function(q){document.querySelectorAll(q).forEach(function(e){if(els.indexOf(e)<0)els.push(e)})});
 els.forEach(function(e){e.classList.add('rv')});
 var head=document.querySelectorAll('header .rv');head.forEach(function(e,i){e.style.transitionDelay=(i*120)+'ms'});
