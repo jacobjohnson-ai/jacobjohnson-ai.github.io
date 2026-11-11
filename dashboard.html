@@ -34,7 +34,7 @@ header p{color:var(--mute);margin-top:6px;max-width:760px}
 .brow{display:grid;grid-template-columns:120px 1fr 36px;align-items:center;gap:10px;font-size:14px;cursor:default}
 .brow span:first-child{color:var(--mute)}
 .track{height:18px;position:relative}
-.fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;transition:width 1s cubic-bezier(.2,.7,.2,1),opacity .15s}@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+.fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;transition:width 1s cubic-bezier(.2,.7,.2,1),opacity .15s}
 .brow:hover .fill{opacity:.75}
 .brow b{text-align:right;font-weight:500}
 svg text{fill:var(--mute);font-size:11px;font-family:Inter,system-ui,sans-serif}
@@ -46,11 +46,13 @@ svg text{fill:var(--mute);font-size:11px;font-family:Inter,system-ui,sans-serif}
 .uitem .t{color:var(--mute)}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink)}
 .pill:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--urgent)}
+.embed body{background:var(--card)}.embed nav{display:none}.embed .wrap{width:100%;padding:8px 28px 28px}.embed header{padding-top:22px}.embed .card{background:#1a1a1a}
 .note{color:var(--dim);font-size:13px;margin-top:22px}
 @media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.uitem{grid-template-columns:1fr 1fr}.uitem>:last-child{grid-column:1/-1}}
 </style>
 </head>
 <body>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');</script>
 <div class="wrap">
 <nav><a href="/">← Jacob Johnson</a><a href="/#projects">Projects</a></nav>
 
@@ -88,7 +90,7 @@ function hideTip(){tip.style.opacity=0}
 function get(v){return fetch(URL_+v,{headers:{apikey:KEY}}).then(function(r){if(!r.ok)throw r.status;return r.json()})}
 function fmtDay(s){var d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
 
-var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var RM=false;
 function countUp(id,to,dec){var el=document.getElementById(id);to=Number(to)||0;
  if(RM){el.textContent=to.toFixed(dec);return}
  var t0=null,D=1200;function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/D),e=1-Math.pow(1-p,3);

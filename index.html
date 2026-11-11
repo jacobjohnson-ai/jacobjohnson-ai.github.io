@@ -84,6 +84,7 @@ a.pc img{display:block;width:100%;height:100%;object-fit:contain;background:#171
 .modal.show .mwrap{transform:none}
 .mbox{background:var(--card);border:1px solid var(--line);border-radius:16px;max-height:calc(86vh / var(--z));overflow-y:auto}
 .mbox .card{border:0;border-radius:0}
+.mframe{display:block;width:100%;height:calc(86vh / var(--z) - 2px);border:0;background:var(--card)}
 .mx{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
 .mx:hover{border-color:var(--accent)}
 body.lock{overflow:hidden}
@@ -125,7 +126,7 @@ body.lock{overflow:hidden}
 <a class="pc" href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html">
 <div><h3>AI Support Ticket Triage</h3><p>AI sorts incoming support tickets, saves them to HubSpot, and alerts Slack when urgent.</p><span class="go">View project →</span></div>
 </a>
-<a class="pc" href="/dashboard.html">
+<a class="pc" href="/dashboard.html" data-frame="/dashboard.html?embed=1">
 <div><h3>Support Ticket Dashboard</h3><p>Every ticket is saved to a SQL database and shown on a live dashboard of trends and urgent issues.</p><span class="go">View dashboard →</span></div>
 </a>
 </div>
@@ -173,6 +174,9 @@ document.querySelectorAll('[data-modal]').forEach(function(a){a.addEventListener
   var u=a.getAttribute('data-modal');e.preventDefault();
   if(cache[u])return show(cache[u]);
   fetch(u,{cache:'no-cache'}).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),c=d.querySelector('.card');if(!c){location.href=u;return;}cache[u]=c.outerHTML;show(cache[u]);}).catch(function(){location.href=u;});
+});});
+document.querySelectorAll('[data-frame]').forEach(function(a){a.addEventListener('click',function(e){
+  e.preventDefault();show('<iframe class="mframe" src="'+a.getAttribute('data-frame')+'" title="'+a.querySelector('h3').textContent+'"></iframe>');
 });});
 document.getElementById('mx').onclick=close;
 m.addEventListener('click',function(e){if(e.target===m)close();});
