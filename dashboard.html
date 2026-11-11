@@ -34,7 +34,7 @@ header p{color:var(--mute);margin-top:6px;max-width:760px}
 .brow{display:grid;grid-template-columns:120px 1fr 36px;align-items:center;gap:10px;font-size:14px;cursor:default}
 .brow span:first-child{color:var(--mute)}
 .track{height:18px;position:relative}
-.fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px;transition:opacity .15s}
+.fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;transition:width 1s cubic-bezier(.2,.7,.2,1),opacity .15s}@media(prefers-reduced-motion:reduce){.fill{transition:none}}
 .brow:hover .fill{opacity:.75}
 .brow b{text-align:right;font-weight:500}
 svg text{fill:var(--mute);font-size:11px;font-family:Inter,system-ui,sans-serif}
@@ -88,17 +88,21 @@ function hideTip(){tip.style.opacity=0}
 function get(v){return fetch(URL_+v,{headers:{apikey:KEY}}).then(function(r){if(!r.ok)throw r.status;return r.json()})}
 function fmtDay(s){var d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
 
+var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(id,to,dec){var el=document.getElementById(id);to=Number(to)||0;
+ if(RM){el.textContent=to.toFixed(dec);return}
+ var t0=null,D=1200;function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/D),e=1-Math.pow(1-p,3);
+  el.textContent=(to*e).toFixed(dec);if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
 function stats(s){s=s[0]||{};
- document.getElementById('s-total').textContent=s.total_tickets;
- document.getElementById('s-week').textContent=s.this_week;
- document.getElementById('s-urgent').textContent=s.urgent;
- document.getElementById('s-avg').textContent=Number(s.avg_priority).toFixed(1)}
+ countUp('s-total',s.total_tickets,0);countUp('s-week',s.this_week,0);
+ countUp('s-urgent',s.urgent,0);countUp('s-avg',s.avg_priority,1)}
 
 function cats(rows){var max=Math.max.apply(null,rows.map(function(r){return r.tickets}));
  var el=document.getElementById('cat');el.innerHTML='';
  rows.forEach(function(r){var d=document.createElement('div');d.className='brow';
-  d.innerHTML='<span>'+(LABEL[r.category]||r.category)+'</span><div class="track"><div class="fill" style="width:'+(r.tickets/max*100)+'%"></div></div><b>'+r.tickets+'</b>';
-  el.appendChild(d)})}
+  d.innerHTML='<span>'+(LABEL[r.category]||r.category)+'</span><div class="track"><div class="fill" data-w="'+(r.tickets/max*100)+'" style="width:0"></div></div><b>'+r.tickets+'</b>';
+  el.appendChild(d)});
+ requestAnimationFrame(function(){requestAnimationFrame(function(){el.querySelectorAll('.fill').forEach(function(b,i){b.style.transitionDelay=(RM?0:i*80)+'ms';b.style.width=b.dataset.w+'%'})})})}
 
 function days(rows){var el=document.getElementById('day');
  var W=Math.max(260,Math.round(el.clientWidth)),H=W<500?180:230,P={l:30,r:22,t:10,b:24},iw=W-P.l-P.r,ih=H-P.t-P.b;
@@ -109,13 +113,15 @@ function days(rows){var el=document.getElementById('day');
  var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="Tickets per day">';
  [0,top/2,top].forEach(function(v){s+='<line x1="'+P.l+'" x2="'+(W-P.r)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#222"/><text x="'+(P.l-8)+'" y="'+(y(v)+4)+'" text-anchor="end">'+v+'</text>'});
  var pts=rows.map(function(r,i){return x(i)+','+y(r.tickets)}).join(' ');
- s+='<polyline points="'+pts+'" fill="none" stroke="#e5e5e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+ s+='<polyline points="'+pts+'" fill="none" stroke="#e5e5e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" id="ln"/>';
  var step=Math.max(1,Math.round(rows.length/(W<500?3:6)));
  rows.forEach(function(r,i){if(i%step===0)s+='<text x="'+x(i)+'" y="'+(H-6)+'" text-anchor="middle">'+fmtDay(r.day)+'</text>'});
  s+='<line id="xh" y1="'+P.t+'" y2="'+(P.t+ih)+'" stroke="#555" stroke-dasharray="3 3" opacity="0"/><circle id="dot" r="4.5" fill="#f2f2f2" stroke="#141414" stroke-width="2" opacity="0"/>';
  s+='<rect x="'+P.l+'" y="'+P.t+'" width="'+iw+'" height="'+ih+'" fill="transparent" id="hit"/></svg>';
  el.innerHTML=s;
- var svg=el.querySelector('svg'),xh=svg.querySelector('#xh'),dot=svg.querySelector('#dot');
+ var svg=el.querySelector('svg'),ln=svg.querySelector('#ln');
+ if(!RM&&!el.dataset.drawn){var L=ln.getTotalLength();ln.style.strokeDasharray=L;ln.style.strokeDashoffset=L;ln.getBoundingClientRect();ln.style.transition='stroke-dashoffset 1.6s ease-out';ln.style.strokeDashoffset=0;el.dataset.drawn=1}
+ var xh=svg.querySelector('#xh'),dot=svg.querySelector('#dot');
  svg.querySelector('#hit').addEventListener('mousemove',function(e){var b=svg.getBoundingClientRect(),px=(e.clientX-b.left)/b.width*W;
   var i=Math.round((px-P.l)/iw*(rows.length-1));i=Math.max(0,Math.min(rows.length-1,i));var r=rows[i];
   xh.setAttribute('x1',x(i));xh.setAttribute('x2',x(i));xh.setAttribute('opacity',1);
