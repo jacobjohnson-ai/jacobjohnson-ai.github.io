@@ -162,7 +162,7 @@ function show(html){b.innerHTML=html;m.classList.add('open');document.body.class
 document.querySelectorAll('[data-modal]').forEach(function(a){a.addEventListener('click',function(e){
   var u=a.getAttribute('data-modal');e.preventDefault();
   if(cache[u])return show(cache[u]);
-  fetch(u).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),c=d.querySelector('.card');if(!c){location.href=u;return;}cache[u]=c.outerHTML;show(cache[u]);}).catch(function(){location.href=u;});
+  fetch(u,{cache:'no-cache'}).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),c=d.querySelector('.card');if(!c){location.href=u;return;}cache[u]=c.outerHTML;show(cache[u]);}).catch(function(){location.href=u;});
 });});
 document.getElementById('mx').onclick=close;
 m.addEventListener('click',function(e){if(e.target===m)close();});
