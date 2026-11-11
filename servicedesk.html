@@ -37,6 +37,7 @@ label{display:block;font-size:13px;color:var(--mute);margin:0 0 6px}
 .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .role{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;cursor:pointer;text-align:left;color:var(--ink);font-weight:400}
 .role:hover{border-color:#555}.role b{display:block;font-size:16px;margin-bottom:4px}.role span{color:var(--mute);font-size:13.5px;display:block;line-height:1.45}
+.role:disabled{opacity:.45;cursor:default}.role.busy{opacity:1;border-color:#555}.role.busy em{color:var(--mute)}
 .role em{font-style:normal;display:block;margin-top:12px;font-size:13px;color:var(--ink);font-weight:600}
 .or{color:var(--dim);font-size:13px;text-align:center}
 .manual{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
@@ -151,7 +152,7 @@ function showLogin(err){main.innerHTML='<div class="login"><div><div class="lbl"
  DEMOS.map(function(d,i){return '<button class="role" data-i="'+i+'"><b>'+d.name+'</b><span>'+d.who+'</span><span style="margin-top:8px">'+d.what+'</span><em>Log in →</em></button>'}).join('')+
  '</div></div><div class="or">or sign in</div><form class="manual" id="lf"><div><label>Email</label><input id="em" type="email" autocomplete="username"></div><div><label>Password</label><input id="pw" type="password" autocomplete="current-password"></div><button>Sign in</button></form>'+
  '<div class="err" id="le">'+esc(err||'')+'</div><p class="note-foot">Demo accounts for a fictional company. Sign-ups are turned off, and each role can only do what the database allows.</p></div>';
- main.querySelectorAll('.role').forEach(function(b){b.onclick=function(){var d=DEMOS[b.dataset.i];b.disabled=true;login(d.email,DEMO_PW).catch(function(e){showLogin(e.message)})}});
+ main.querySelectorAll('.role').forEach(function(b){b.onclick=function(){var d=DEMOS[b.dataset.i];main.querySelectorAll('.role').forEach(function(x){x.disabled=true});b.classList.add('busy');b.querySelector('em').textContent='Logging in…';login(d.email,DEMO_PW).catch(function(e){showLogin(e.message)})}});
  document.getElementById('lf').onsubmit=function(e){e.preventDefault();login(document.getElementById('em').value.trim(),document.getElementById('pw').value).catch(function(e){showLogin(e.message)})}}
 
 // ---- Main views ----
