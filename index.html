@@ -14,7 +14,7 @@ html{scroll-behavior:smooth}
 ::-webkit-scrollbar-track{background:transparent;margin:6px 0}
 ::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
 ::-webkit-scrollbar-thumb:hover{background:#5a5a5a}
-.mbox{scrollbar-width:none}.mbox::-webkit-scrollbar{display:none}
+.mbox::-webkit-scrollbar{width:10px}.mbox::-webkit-scrollbar-track{background:var(--card);margin:16px 0}.mbox::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:3px solid var(--card)}.mbox::-webkit-scrollbar-thumb:hover{background:#5a5a5a}
 ::-webkit-scrollbar-button{display:none;width:0;height:0}
 @supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:#3a3a3a transparent}}
 :root{--z:1}
@@ -82,7 +82,7 @@ a.pc img{display:block;width:100%;height:100%;object-fit:contain;background:#171
 .modal.open{display:flex}.modal.show{opacity:1}
 .mwrap{position:relative;width:min(980px,100%);transform:translateY(16px) scale(.98);transition:transform .25s}
 .modal.show .mwrap{transform:none}
-.mbox{background:var(--bg);border:1px solid var(--line);border-radius:16px;max-height:calc(86vh / var(--z));overflow-y:auto}
+.mbox{background:var(--card);border:1px solid var(--line);border-radius:16px;max-height:calc(86vh / var(--z));overflow-y:auto}
 .mbox .card{border:0;border-radius:0}
 .mx{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
 .mx:hover{border-color:var(--accent)}
