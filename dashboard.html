@@ -59,7 +59,7 @@ svg text{fill:var(--mute);font-size:11px;font-family:Inter,system-ui,sans-serif}
 
 <header>
 <h1>Support Ticket Dashboard</h1>
-<p>Live numbers from the AI ticket workflow. Every ticket is classified by AI in n8n and saved to a Postgres database. This page reads only summary views, never names or emails.</p>
+<p>Live numbers from the AI support tools. Tickets come from the AI ticket triage workflow (n8n) and the IT helpdesk agent, and are saved to a Postgres database. This page reads only summary views, never names or emails.</p>
 <div class="live" id="live"><i></i><span>Loading…</span></div>
 </header>
 
@@ -77,7 +77,7 @@ svg text{fill:var(--mute);font-size:11px;font-family:Inter,system-ui,sans-serif}
 
 <div class="card urg"><h2>Recent high-urgency tickets</h2><div class="ulist" id="urg"></div></div>
 
-<p class="note">Sample tickets (fake names, @example.com emails) plus real test runs. Data: Supabase Postgres · Workflow: n8n · AI: Google Gemini.</p>
+<p class="note">Sample tickets (fake names and example email addresses) plus real test runs. Data: Supabase Postgres · Workflow: n8n · Agent: Cloudflare Workers · AI: Google Gemini.</p>
 </div>
 <div class="tip" id="tip"></div>
 

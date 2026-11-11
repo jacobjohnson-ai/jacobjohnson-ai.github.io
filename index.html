@@ -204,7 +204,7 @@ document.querySelectorAll('[data-modal]').forEach(function(a){a.addEventListener
   fetch(u,{cache:'no-cache'}).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),c=d.querySelector('.card');if(!c){location.href=u;return;}cache[u]=c.outerHTML;show(cache[u]);}).catch(function(){location.href=u;});
 });});
 document.querySelectorAll('[data-frame]').forEach(function(a){a.addEventListener('click',function(e){
-  e.preventDefault();show('<iframe class="mframe" src="'+a.getAttribute('data-frame')+'&v='+Date.now()+'" title="'+a.querySelector('h3').textContent+'"></iframe>');if(/helpdesk/.test(a.getAttribute('data-frame')))m.querySelector('.mwrap').classList.add('wide');var fr=document.querySelector('.mframe');if(fr)fr.addEventListener('load',function(){try{fr.contentWindow.focus()}catch(e){}});
+  e.preventDefault();show('<iframe class="mframe" src="'+a.getAttribute('data-frame')+'&v='+Date.now()+'" title="'+a.querySelector('h3').textContent+'"></iframe>');if(/helpdesk|dashboard/.test(a.getAttribute('data-frame')))m.querySelector('.mwrap').classList.add('wide');var fr=document.querySelector('.mframe');if(fr)fr.addEventListener('load',function(){try{fr.contentWindow.focus()}catch(e){}});
 });});
 document.getElementById('mx').onclick=close;
 m.addEventListener('click',function(e){if(e.target===m)close();});
