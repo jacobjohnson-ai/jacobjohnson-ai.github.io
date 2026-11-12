@@ -132,7 +132,8 @@ body.lock{overflow:hidden}
 .ln path{fill:none;stroke:#34405a;stroke-width:1.6}.dt circle{fill:#60a5fa}
 .bx{position:absolute;width:150px;height:50px;border:1px solid #2c2c2c;border-radius:8px;background:#121212;padding:6px 11px;display:flex;flex-direction:column;justify-content:center;color:var(--ink);transition:border-color .2s}
 .bx:hover{border-color:#60a5fa;text-decoration:none}
-.bx b{font-size:13.5px;font-weight:600}.bx span{font-size:12.5px;color:var(--mute)}
+.bx b{font-size:13.5px;font-weight:600;display:flex;justify-content:space-between}.bx .go{font-style:normal;color:var(--dim);transition:color .2s,transform .2s}.bx:hover .go{color:#60a5fa;transform:translateX(2px)}
+.hint{position:absolute;left:0;right:0;bottom:-26px;text-align:center;font-size:12.5px;color:var(--dim)}.bx span{font-size:12.5px;color:var(--mute)}
 .b1{left:0;top:23px}.b2{left:0;top:137px}.b3{left:410px;top:23px}.b4{left:410px;top:137px}
 .hub{position:absolute;left:232px;top:58px;width:96px;height:94px;border:1px solid #3b4d6b;border-radius:10px;background:#111a28;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .hub i{font-style:normal;font-size:24px;font-weight:600;line-height:1.1}.hub span{font-size:12px;color:var(--mute)}.hub small{font-size:10.5px;color:var(--dim);margin-top:2px}
@@ -144,7 +145,7 @@ body.lock{overflow:hidden}
 @media(max-width:1100px){.pr{grid-template-columns:1fr;gap:22px}}
 @media(max-width:640px){
  .dg{width:100%;height:auto;display:grid;grid-template-columns:1fr 1fr;gap:28px 12px;padding:4px 0}
- .dg svg{display:none}.bx,.hub{position:relative;left:auto;top:auto;width:auto}
+ .dg svg{display:none}.hint{position:static;grid-column:1/-1;grid-row:4}.bx,.hub{position:relative;left:auto;top:auto;width:auto}
  .hub{grid-column:1/-1;grid-row:2;height:auto;padding:10px;justify-self:center;width:140px}
  .b3{grid-row:3}.b4{grid-row:3}
  .hub:before,.hub:after{content:"";position:absolute;left:50%;width:1px;height:28px;background:#34405a}.hub:before{bottom:100%}.hub:after{top:100%}
@@ -181,11 +182,12 @@ body.lock{overflow:hidden}
     <circle r="3.5" opacity="0"><set attributeName="opacity" to="1" begin="1.8s"/><animateMotion dur="3.2s" begin="1.8s" repeatCount="indefinite"><mpath href="#w3"/></animateMotion></circle>
     <circle r="3.5" opacity="0"><set attributeName="opacity" to="1" begin="2.5s"/><animateMotion dur="3.2s" begin="2.5s" repeatCount="indefinite"><mpath href="#w4"/></animateMotion></circle>
    </g></svg>
-  <a class="bx b1" href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html"><b>Ticket triage</b><span data-s="new_this_week" data-f="{} new this week">n8n · Gemini</span></a>
-  <a class="bx b2" href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-title="IT Helpdesk Agent"><b>Helpdesk agent</b><span data-s="fix_guides" data-f="{} fix guides">Gemini agent</span></a>
+  <a class="bx b1" href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html"><b>Ticket triage<i class="go">→</i></b><span data-s="new_this_week" data-f="{} new this week">n8n · Gemini</span></a>
+  <a class="bx b2" href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-title="IT Helpdesk Agent"><b>Helpdesk agent<i class="go">→</i></b><span data-s="fix_guides" data-f="{} fix guides">Gemini agent</span></a>
   <div class="hub"><i data-s="total_tickets" data-f="{}">·</i><span>tickets</span><small>shared database</small></div>
-  <a class="bx b3" href="/service-desk-platform/" data-frame="/service-desk-platform/?embed=1" data-title="Service Desk Platform"><b>Service desk app</b><span data-s="open_now" data-f="{} open now">3 roles</span></a>
-  <a class="bx b4" href="/dashboard.html" data-frame="/dashboard.html?embed=1" data-title="Support Ticket Dashboard"><b>Reporting</b><span data-s="avg_first_reply_hours" data-f="{}h avg first reply">Live charts</span></a>
+  <a class="bx b3" href="/service-desk-platform/" data-frame="/service-desk-platform/?embed=1" data-title="Service Desk Platform"><b>Service desk<i class="go">→</i></b><span data-s="open_now" data-f="{} open now">3 roles</span></a>
+  <a class="bx b4" href="/dashboard.html" data-frame="/dashboard.html?embed=1" data-title="Support Ticket Dashboard"><b>Reporting<i class="go">→</i></b><span data-s="avg_first_reply_hours" data-f="{}h avg first reply">Live charts</span></a>
+  <p class="hint">Click a part to try it</p>
  </div></div>
 </div>
 <div class="pr">
