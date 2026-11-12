@@ -296,7 +296,8 @@ body.lock{overflow:hidden}
 (function(){
 var m=document.getElementById('modal'),b=document.getElementById('mbody'),cache={};
 function close(){m.classList.remove('show');document.body.classList.remove('lock');setTimeout(function(){m.classList.remove('open');b.innerHTML='';},250);}
-function wire(){var p=b.querySelector('#play');if(!p)return;p.onclick=function(){var s=b.querySelectorAll('.step');s.forEach(function(e){e.classList.remove('on')});s.forEach(function(e,i){setTimeout(function(){e.classList.add('on')},400+i*1100)});};}
+function bring(e){var c=e.closest('.mbox');if(!c){var r=e.getBoundingClientRect();if(r.bottom>innerHeight)scrollBy({top:r.bottom-innerHeight+24,behavior:'smooth'});return}var r=e.getBoundingClientRect(),cr=c.getBoundingClientRect();if(r.bottom>cr.bottom)c.scrollBy({top:r.bottom-cr.bottom+24,behavior:'smooth'})}
+function wire(){var p=b.querySelector('#play');if(!p)return;p.onclick=function(){var s=b.querySelectorAll('.step');s.forEach(function(e){e.classList.remove('on')});s.forEach(function(e,i){setTimeout(function(){e.classList.add('on');bring(e);setTimeout(function(){bring(e)},750)},400+i*1100)});};}
 function show(html){m.querySelector('.mwrap').classList.remove('wide');b.innerHTML=html;m.classList.add('open');document.body.classList.add('lock');m.querySelector('.mbox').scrollTop=0;requestAnimationFrame(function(){m.classList.add('show')});wire();}
 document.querySelectorAll('[data-modal]').forEach(function(a){a.addEventListener('click',function(e){
   var u=a.getAttribute('data-modal');e.preventDefault();

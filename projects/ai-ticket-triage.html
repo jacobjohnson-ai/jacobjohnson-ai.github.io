@@ -111,10 +111,12 @@ a.pc img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;backgroun
 </footer>
 </div>
 <script>
+function bring(e){var c=e.closest('.mbox');if(!c){var r=e.getBoundingClientRect();if(r.bottom>innerHeight)scrollBy({top:r.bottom-innerHeight+24,behavior:'smooth'});return}var r=e.getBoundingClientRect(),cr=c.getBoundingClientRect();if(r.bottom>cr.bottom)c.scrollBy({top:r.bottom-cr.bottom+24,behavior:'smooth'})}
+
 document.getElementById('play').onclick=function(){
   var s=document.querySelectorAll('.step');
   s.forEach(function(e){e.classList.remove('on')});
-  s.forEach(function(e,i){setTimeout(function(){e.classList.add('on')},400+i*1100)});
+  s.forEach(function(e,i){setTimeout(function(){e.classList.add('on');bring(e);setTimeout(function(){bring(e)},750)},400+i*1100)});
 };
 </script>
 </body>
