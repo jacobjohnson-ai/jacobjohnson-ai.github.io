@@ -194,6 +194,10 @@ body.lock{overflow:hidden}
 .parts4 b{font-size:14.5px;font-weight:600}.parts4 b i{font-style:normal;color:#6b6b6b;display:inline-block;transition:transform .2s,color .2s}
 @media(max-width:640px){.parts4{grid-template-columns:1fr 1fr;gap:12px 16px}.parts4 b{font-size:14px}}
 .parts4 a:hover b i{color:#60a5fa;transform:translateX(3px)}.parts4 span{font-size:13px;color:#8a8a8a}.pl a.gh{color:#a3a3a3;font-weight:400}
+
+.inv .doc,.inv .out{transition:opacity .35s}.inv.swap .doc,.inv.swap .out{opacity:0}
+.doc u.amber{color:#92400e;background:#fef3c7}.doc u.green{color:#166534;background:#dcfce7}
+.out em.red{color:#f87171}.out em.green{color:#4ade80}
 </style>
 </head>
 <body>
@@ -237,7 +241,7 @@ body.lock{overflow:hidden}
  <div class="pv inv">
   <div class="doc"><b>Ridgeway IT Services</b><span>On-site support, hourly</span><span>6 × $95.00 <u>$620.00</u></span><span>Network switch <u class="ok">$329.00</u></span></div>
   <div class="ar">→</div>
-  <div class="out"><em>Needs review</em><span>6 × $95.00 is $570.00, but the invoice says $620.00.</span></div>
+  <div class="out"><em>Needs review</em><span>6 × $95.00 is $570.00, but the invoice says $620.00.</span></div></div>
  </div>
 </div>
 </div>
@@ -350,16 +354,31 @@ fetch('https://pwcpznbqkdlprkkydpnk.supabase.co/rest/v1/homepage_stats?select=*'
 (function(){var box=document.querySelector('.trk');if(!box)return;
  var T=[["#169","Laptop won't charge",["to the AI agent","agent couldn't fix it","technician replied","counted in reports"]],
         ["#172","Can't connect to the VPN",["to the AI agent","outage confirmed","network team on it","counted in reports"]],
-        ["#175","Outlook keeps asking for my password",["to the AI agent","fixes didn't work","technician reset sign-in","counted in reports"]],
+        ["#175","Outlook keeps asking for my password",["to the AI agent","fixes didn't work","sign-in reset","counted in reports"]],
         ["#178","Printer offline on floor 2",["through the web form","sorted by AI triage","technician replied","counted in reports"]]];
  var st=box.querySelectorAll('.st'),fill=box.querySelector('.fill'),id=box.querySelector('.id'),nm=box.querySelector('.tkt b'),k=0,step=0,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function load(t){id.textContent=t[0];nm.textContent=t[1];st.forEach(function(s,i){s.querySelector('span').textContent=t[2][i]})}
  function paint(n){st.forEach(function(s,i){s.classList.toggle('on',i<=n);s.classList.toggle('now',i===n&&n<3);s.classList.toggle('done',n===3);s.classList.toggle('last',i===3)});fill.style.width=n<=0?'0':'calc('+(n*25)+'% - '+(n?0:0)+'px)'}
  load(T[0]);if(still){paint(3);return}
  function tick(){if(step<3){step++;paint(step);return}
-  box.classList.add('swap');setTimeout(function(){k=(k+1)%T.length;load(T[k]);step=0;paint(0);box.classList.remove('swap')},450)}
+  box.classList.add('swap');document.dispatchEvent(new Event('tracker-next'));setTimeout(function(){k=(k+1)%T.length;load(T[k]);step=0;paint(0);box.classList.remove('swap')},450)}
  paint(0);var timer=null;
  new IntersectionObserver(function(e){if(e[0].isIntersecting){if(!timer)timer=setInterval(tick,1300)}else{clearInterval(timer);timer=null}},{threshold:.3}).observe(box);
+})();
+</script>
+<script>
+// Invoice preview: show the next sample invoice each time the ticket tracker moves to its next ticket
+(function(){var box=document.querySelector('.pv.inv');if(!box)return;
+ var V=[{v:"Ridgeway IT Services",r:[["On-site support, hourly",""],["6 × $95.00","$620.00",""],["Network switch","$329.00","ok"]],s:"Needs review",c:"",m:"6 × $95.00 is $570.00, but the invoice says $620.00."},
+        {v:"Brightline Office Supply",r:[["Invoice # BOS-19977",""],["Copy paper, 10-ream case","$212.50","ok"],["Total","$383.82",""]],s:"Possible duplicate",c:"red",m:"Same invoice as BOS-19977, which was already paid."},
+        {v:"Summit Workspace Furniture",r:[["Sit-stand desks, 8",""],["Task chairs, 8","$2,496.00","ok"],["Total","$7,726.91","amber"]],s:"Needs approval",c:"",m:"Over the $5,000.00 limit, so a manager has to approve it."},
+        {v:"Brightline Office Supply",r:[["Invoice # BOS-20418",""],["Toner cartridges, 3","$269.97","ok"],["Total","$534.37","green"]],s:"Ready to pay",c:"green",m:"The math checks out and it isn't a duplicate."}];
+ var doc=box.querySelector('.doc'),em=box.querySelector('.out em'),msg=box.querySelector('.out span'),k=0;
+ function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+ function show(x){doc.innerHTML='<b>'+esc(x.v)+'</b>'+x.r.map(function(r){return '<span>'+esc(r[0])+(r[1]?' <u'+(r[2]?' class="'+r[2]+'"':'')+'>'+esc(r[1])+'</u>':'')+'</span>'}).join('');
+  em.className=x.c;em.textContent=x.s;msg.textContent=x.m}
+ function next(){box.classList.add('swap');setTimeout(function(){k=(k+1)%V.length;show(V[k]);box.classList.remove('swap')},350)}
+ document.addEventListener('tracker-next',next);
 })();
 </script>
 </body>
