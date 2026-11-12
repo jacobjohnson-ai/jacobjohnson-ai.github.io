@@ -174,17 +174,21 @@ body.lock{overflow:hidden}
 
 
 
-.sp{list-style:none;margin:20px 0 6px;position:relative;display:grid;gap:14px;padding-left:22px}
-.sp:before{content:"";position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:#2a2a2a}
-.sp li{position:relative;cursor:pointer;color:#6b6b6b;transition:color .4s}
-.sp li:before{content:"";position:absolute;left:-22px;top:6px;width:9px;height:9px;border-radius:50%;background:#2a2a2a;transition:background .4s,box-shadow .4s}
-.sp li b{display:block;font-size:15px;font-weight:600;color:#6b6b6b;transition:color .4s}.sp li span{font-size:13.5px;color:#6b6b6b!important}.sp li.on span{color:#a3a3a3!important}
-.sp li.done b{color:#a3a3a3}.sp li.done:before{background:#3b5b8a}
-.sp li.on b{color:#f2f2f2}.sp li.on{color:#a3a3a3}.sp li.on:before{background:#60a5fa;box-shadow:0 0 0 4px rgba(96,165,250,.18)}
-.scr{position:relative;aspect-ratio:16/10;align-self:center;width:100%;max-width:560px;justify-self:start}
-.scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;border-radius:6px;background:#141414;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s;box-shadow:0 20px 50px rgba(0,0,0,.45)}
-.scr img.on{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.scr img,.sp li,.sp li:before{transition:none}}
+
+.trk{max-width:560px;width:100%;justify-self:start}
+.trk .tkt{display:flex;gap:10px;align-items:baseline;margin-bottom:24px;transition:opacity .35s}
+.trk .tkt .id{color:#6b6b6b;font-size:13px}.trk .tkt b{font-size:17px;font-weight:600}
+.trk.swap .tkt{opacity:0}
+.track{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.track:before{content:"";position:absolute;left:6px;right:calc(25% - 6px);top:5px;height:2px;background:#2a2a2a}
+.track .fill{position:absolute;left:6px;top:5px;height:2px;background:#60a5fa;width:0;transition:width .7s ease}
+.track .st{position:relative;display:flex;flex-direction:column;gap:2px;padding-top:22px}
+.track .st i{position:absolute;top:0;left:0;width:12px;height:12px;border-radius:50%;background:#2a2a2a;z-index:1;transition:background .4s,box-shadow .4s}
+.track .st b{font-size:14px;color:#6b6b6b;transition:color .4s}.track .st span{font-size:12.5px;color:#555;transition:color .4s}
+.track .st.on i{background:#60a5fa}.track .st.on b{color:#f2f2f2}.track .st.on span{color:#a3a3a3}
+.track .st.now i{box-shadow:0 0 0 5px rgba(96,165,250,.2)}
+.track .st.done.last i{background:#4ade80;box-shadow:0 0 0 5px rgba(74,222,128,.18)}
+@media(max-width:640px){.track .st b{font-size:12.5px}.track .st span{font-size:11px}}
 </style>
 </head>
 <body>
@@ -201,21 +205,18 @@ body.lock{overflow:hidden}
 <section id="projects">
 <h2>Projects</h2>
 <div class="rows">
-<div class="pr story">
- <div class="pt"><h3>AI Service Desk</h3><p>An IT service desk in four parts that share one database. Follow one ticket through it:</p>
- <ol class="sp">
-  <li data-i="0"><b>An employee reports a problem</b><span>The AI agent tries fixes, then opens ticket #169</span></li>
-  <li data-i="1"><b>It lands in the IT queue</b><span>With a reply deadline based on urgency</span></li>
-  <li data-i="2"><b>A technician works it</b><span>Replies, and adds a note only staff can see</span></li>
-  <li data-i="3"><b>Managers see the numbers</b><span>Volume, open tickets, and reply times</span></li>
- </ol>
+<div class="pr">
+ <div class="pt"><h3>AI Service Desk</h3><p>An IT service desk in four parts that share one database: AI ticket triage, a helpdesk agent, an app with role-based logins, and reporting.</p>
  <div class="pl"><a href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-title="IT Helpdesk Agent">Try it live →</a><a href="https://github.com/jacobjohnson-ai/service-desk-platform" target="_blank" rel="noopener">GitHub</a><a href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html">Ticket triage</a></div>
  <div class="tg">n8n · Google Gemini · HubSpot · Slack · Supabase · React · TypeScript</div></div>
- <div class="pv scr">
-  <img src="/img/story/1.png" alt="Employee chat: the agent opens ticket #169" class="on">
-  <img src="/img/story/2.png" alt="Ticket #169 at the top of the technician queue" loading="lazy">
-  <img src="/img/story/3.png" alt="Technician reply and staff-only note on ticket #169" loading="lazy">
-  <img src="/img/story/4.png" alt="Chart of tickets opened and resolved per day" loading="lazy">
+ <div class="pv trk" aria-label="A support ticket moving from reported to resolved">
+  <div class="tkt"><span class="id">#169</span><b>Laptop won't charge</b></div>
+  <div class="track"><div class="fill"></div>
+   <div class="st"><i></i><b>Reported</b><span>to the AI agent</span></div>
+   <div class="st"><i></i><b>Opened</b><span>agent couldn't fix it</span></div>
+   <div class="st"><i></i><b>In progress</b><span>technician replied</span></div>
+   <div class="st"><i></i><b>Resolved</b><span>counted in reports</span></div>
+  </div>
  </div>
 </div>
 <div class="pr">
@@ -334,15 +335,20 @@ fetch('https://pwcpznbqkdlprkkydpnk.supabase.co/rest/v1/homepage_stats?select=*'
 })();
 </script>
 <script>
-// Walk through one ticket's journey: highlight each step and show its screen, one at a time
-(function(){var list=document.querySelectorAll('.sp li'),imgs=document.querySelectorAll('.scr img');if(!list.length)return;
- var cur=0,timer=null,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
- function show(n){cur=n;list.forEach(function(l,i){l.classList.toggle('on',i===n);l.classList.toggle('done',i<n)});imgs.forEach(function(m,i){m.classList.toggle('on',i===n)})}
- function run(){clearInterval(timer);if(still)return;timer=setInterval(function(){show((cur+1)%list.length)},2800)}
- list.forEach(function(l,i){l.addEventListener('click',function(){show(i);run()})});
- show(0);
- var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){show(0);run()}else clearInterval(timer)})},{threshold:.3});
- io.observe(document.querySelector('.pr.story'));
+// Status tracker: one ticket at a time moves Reported -> Resolved, then the next problem starts
+(function(){var box=document.querySelector('.trk');if(!box)return;
+ var T=[["#169","Laptop won't charge",["to the AI agent","agent couldn't fix it","technician replied","counted in reports"]],
+        ["#172","Can't connect to the VPN",["to the AI agent","outage confirmed","network team on it","counted in reports"]],
+        ["#175","Outlook keeps asking for my password",["to the AI agent","fixes didn't work","technician reset sign-in","counted in reports"]],
+        ["#178","Printer offline on floor 2",["through the web form","sorted by AI triage","technician replied","counted in reports"]]];
+ var st=box.querySelectorAll('.st'),fill=box.querySelector('.fill'),id=box.querySelector('.id'),nm=box.querySelector('.tkt b'),k=0,step=0,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function load(t){id.textContent=t[0];nm.textContent=t[1];st.forEach(function(s,i){s.querySelector('span').textContent=t[2][i]})}
+ function paint(n){st.forEach(function(s,i){s.classList.toggle('on',i<=n);s.classList.toggle('now',i===n&&n<3);s.classList.toggle('done',n===3);s.classList.toggle('last',i===3)});fill.style.width=n<=0?'0':'calc('+(n*25)+'% - '+(n?0:0)+'px)'}
+ load(T[0]);if(still){paint(3);return}
+ function tick(){if(step<3){step++;paint(step);return}
+  box.classList.add('swap');setTimeout(function(){k=(k+1)%T.length;load(T[k]);step=0;paint(0);box.classList.remove('swap')},450)}
+ paint(0);var timer=null;
+ new IntersectionObserver(function(e){if(e[0].isIntersecting){if(!timer)timer=setInterval(tick,1300)}else{clearInterval(timer);timer=null}},{threshold:.3}).observe(box);
 })();
 </script>
 </body>
