@@ -189,7 +189,11 @@ body.lock{overflow:hidden}
 .track .st.now i{box-shadow:0 0 0 5px rgba(96,165,250,.2)}
 .track .st.done.last i{background:#4ade80;box-shadow:0 0 0 5px rgba(74,222,128,.18)}
 @media(max-width:640px){.track .st b{font-size:12.5px}.track .st span{font-size:11px}}
-.pl.four{flex-wrap:wrap;gap:8px 20px}.pl.four a{color:#f2f2f2;font-weight:600}.pl a.gh{color:#a3a3a3;font-weight:400}
+.parts4{display:grid;grid-template-columns:repeat(2,max-content);gap:12px 44px;margin-top:16px}
+.parts4 a{display:flex;flex-direction:column;color:#f2f2f2}.parts4 a:hover{text-decoration:none}
+.parts4 b{font-size:14.5px;font-weight:600}.parts4 b i{font-style:normal;color:#6b6b6b;display:inline-block;transition:transform .2s,color .2s}
+@media(max-width:640px){.parts4{grid-template-columns:1fr 1fr;gap:12px 16px}.parts4 b{font-size:14px}}
+.parts4 a:hover b i{color:#60a5fa;transform:translateX(3px)}.parts4 span{font-size:13px;color:#8a8a8a}.pl a.gh{color:#a3a3a3;font-weight:400}
 </style>
 </head>
 <body>
@@ -208,7 +212,12 @@ body.lock{overflow:hidden}
 <div class="rows">
 <div class="pr">
  <div class="pt"><h3>AI Service Desk</h3><p>An IT service desk in four parts that share one database: AI ticket triage, a helpdesk agent, an app with role-based logins, and reporting.</p>
- <div class="pl four"><a href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-title="IT Helpdesk Agent">Helpdesk agent →</a><a href="/service-desk-platform/" data-frame="/service-desk-platform/?embed=1" data-title="Service Desk Platform">Service desk app →</a><a href="/dashboard.html" data-frame="/dashboard.html?embed=1" data-title="Support Ticket Dashboard">Dashboard →</a><a href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html">Ticket triage →</a></div>
+ <div class="parts4">
+  <a href="/helpdesk.html" data-frame="/helpdesk.html?embed=1" data-title="IT Helpdesk Agent"><b>Helpdesk agent <i>→</i></b><span>Chat with the AI</span></a>
+  <a href="/service-desk-platform/" data-frame="/service-desk-platform/?embed=1" data-title="Service Desk Platform"><b>Service desk app <i>→</i></b><span>Log in as staff</span></a>
+  <a href="/dashboard.html" data-frame="/dashboard.html?embed=1" data-title="Support Ticket Dashboard"><b>Dashboard <i>→</i></b><span>See the numbers</span></a>
+  <a href="/projects/ai-ticket-triage.html" data-modal="/projects/ai-ticket-triage.html"><b>Ticket triage <i>→</i></b><span>How forms get sorted</span></a>
+ </div>
  <div class="pl"><a class="gh" href="https://github.com/jacobjohnson-ai/service-desk-platform" target="_blank" rel="noopener">GitHub</a></div>
  <div class="tg">n8n · Google Gemini · HubSpot · Slack · Supabase · React · TypeScript</div></div>
  <div class="pv trk" aria-label="A support ticket moving from reported to resolved">
