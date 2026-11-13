@@ -10,13 +10,13 @@
 :root{--bg:#0a0a0a;--card:#141414;--line:#262626;--ink:#f2f2f2;--mute:#a3a3a3;--accent:#ffffff;--ok:#2fbf71}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-track{background:transparent;margin:6px 0}
-::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
-::-webkit-scrollbar-thumb:hover{background:#5a5a5a}
-.mbox::-webkit-scrollbar{width:10px}.mbox::-webkit-scrollbar-track{background:var(--card);margin:16px 0}.mbox::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:8px;border:3px solid var(--card)}.mbox::-webkit-scrollbar-thumb:hover{background:#5a5a5a}
-::-webkit-scrollbar-button{display:none;width:0;height:0}
-@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:#3a3a3a transparent}}
+
+
+
+
+
+
+
 :root{--z:1}
 
 @media(min-width:2200px){body{zoom:1.15}:root{--z:1.15}}
@@ -198,6 +198,7 @@ body.lock{overflow:hidden}
 .inv .doc,.inv .out{transition:opacity .35s}.inv.swap .doc,.inv.swap .out{opacity:0}
 .doc u.amber{color:#92400e;background:#fef3c7}.doc u.green{color:#166534;background:#dcfce7}
 .out em.red{color:#f87171}.out em.green{color:#4ade80}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent;margin:12px 0}::-webkit-scrollbar-thumb{background:#fff;border-radius:4px}::-webkit-scrollbar-button{display:none;width:0;height:0}@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:#fff transparent}}
 </style>
 </head>
 <body>
